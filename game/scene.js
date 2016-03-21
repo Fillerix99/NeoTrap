@@ -14,14 +14,16 @@ function createScene() {
 
     scene.ambientColor = scene.clearColor;
 
+    createTunnel();
+
     createCamera();
 
-    createTunnel();
+    createPlayer();
 }
 
 function createCamera() {
+    // main camera
     cam = new BABYLON.FreeCamera("Free Camera", new BABYLON.Vector3(0, 5, -75), scene);
-    cam.attachControl(canvas, false);
 }
 
 function createTunnel() {
@@ -43,4 +45,22 @@ function createTunnel() {
     // apply the material
     floor1.material = mat;
     floor2.material = mat;
+}
+
+function createPlayer() {
+    // create cube
+    var player = BABYLON.Mesh.CreateBox("Player", 4, scene, true);
+
+    // attach cube to camera
+    player.material = new BABYLON.StandardMaterial("Player Mat", scene);
+    player.material.emissiveColor = new BABYLON.Color3(179 / 255.0, 229 / 255.0, 252 / 255.0);
+
+    player.parent = cam;
+    player.position.x = 0;
+    player.position.z = 20;
+    player.position.y = -4;
+
+    player.scaling.x = 0.5;
+    player.scaling.y = 0.5;
+    player.scaling.z = 0.5;
 }
