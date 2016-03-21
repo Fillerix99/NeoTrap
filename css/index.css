@@ -1,0 +1,48 @@
+﻿@font-face{
+    font-family: roboto;
+    src: url('../fonts/Roboto-Regular.ttf');
+}
+
+html, body{
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    touch-action: none;
+
+    font-family: roboto;
+    color: white;
+}
+
+#renderCanvas{
+    width: 100%;
+    height: 100%;
+}
+
+#fps{
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    color: white;
+
+    margin-left: 10px;
+    margin-top: 10px;
+
+    color: whitesmoke;
+}
+
+#hardware{
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: white;
+
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.debug{
+    font-size: 10pt;
+}
