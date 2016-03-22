@@ -1,9 +1,5 @@
 ﻿/* NeoTrap developed by Omar */
-
-/// <reference path="../engine/Babylon.js" />
-/// <reference path="../game/scene.js" />
-/// <reference path="../sys/window.js" />
-
+/// <reference path="../game/ref.js" />
 /***********************************************/
 
 /* GLOBAL VARS */
@@ -17,18 +13,36 @@ window.addEventListener("DOMContentLoaded", function () {
     engine = new BABYLON.Engine(canvas, true);
     engine.enableOfflineSupport = true;
 
-    // Init
+    // First, create the scene
     createScene();
+
+    // Second, assign input to player
+    controlPlayer();
 
     // GAME LOOP
     engine.runRenderLoop(function () {
-
         scene.render();
     });
+});
 
-    // Resize Window
-    resizeWindow();
+/* SYSTEM FUNCTIONS */
 
-    // Debug Layer
-    debugLayer = new BABYLON.DebugLayer(scene);
+function toggleFullScreen() {
+    if (!document.fullscreenElement &&    // alternative standard method
+        !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {  // current working methods
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) {
+            document.documentElement.msRequestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) {
+            document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) {
+            document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+        }
+    }
+}
+
+// the canvas/window resize event handler
+window.addEventListener('resize', function () {
+    engine.resize();
 });

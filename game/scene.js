@@ -1,7 +1,6 @@
 ﻿/* NeoTrap Scene development */
 
-/// <reference path="../engine/Babylon.js" />
-/// <reference path="../game/game.js" />
+/// <reference path="../game/ref.js" />
 
 function createScene() {
 
@@ -14,19 +13,15 @@ function createScene() {
 
     scene.ambientColor = scene.clearColor;
 
-    createTunnel();
+    // main camera
+    cam = new BABYLON.FreeCamera("Free Camera", new BABYLON.Vector3(0, 5, -75), scene);
 
-    createCamera();
+    createLevel();
 
     createPlayer();
 }
 
-function createCamera() {
-    // main camera
-    cam = new BABYLON.FreeCamera("Free Camera", new BABYLON.Vector3(0, 5, -75), scene);
-}
-
-function createTunnel() {
+function createLevel() {
     // create a new node called "environment"
     var envNode = new BABYLON.Node("Environment", scene);
 
@@ -55,12 +50,8 @@ function createPlayer() {
     player.material = new BABYLON.StandardMaterial("Player Mat", scene);
     player.material.emissiveColor = new BABYLON.Color3(179 / 255.0, 229 / 255.0, 252 / 255.0);
 
+    // position and scaling
     player.parent = cam;
-    player.position.x = 0;
-    player.position.z = 20;
-    player.position.y = -4;
-
-    player.scaling.x = 0.5;
-    player.scaling.y = 0.5;
-    player.scaling.z = 0.5;
-}
+    player.position = new BABYLON.Vector3(0, -4, 20);
+    player.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
+} 
