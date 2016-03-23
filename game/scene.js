@@ -1,6 +1,6 @@
-﻿/* NeoTrap Scene development */
+﻿/// <reference path="../game/ref.js" />
 
-/// <reference path="../game/ref.js" />
+/* SCENE CONTROLLER */
 
 function createScene() {
 
@@ -44,7 +44,7 @@ function createLevel() {
 
 function createPlayer() {
     // create cube
-    var player = BABYLON.Mesh.CreateBox("Player", 4, scene, true);
+    player = BABYLON.Mesh.CreateBox("Player", 4, scene, true);
 
     // attach cube to camera
     player.material = new BABYLON.StandardMaterial("Player Mat", scene);
@@ -54,4 +54,4 @@ function createPlayer() {
     player.parent = cam;
     player.position = new BABYLON.Vector3(0, -4, 20);
     player.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
-} 
+}

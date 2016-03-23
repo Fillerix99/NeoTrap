@@ -1,9 +1,9 @@
-﻿/* NeoTrap developed by Omar */
-/// <reference path="../game/ref.js" />
-/***********************************************/
+﻿/// <reference path="../game/ref.js" />
+
+/* GAME CONTROLLER */
 
 /* GLOBAL VARS */
-var canvas, engine, scene, cam, debugLayer;
+var canvas, engine, scene, cam, debugLayer, player;
 
 
 /* MAIN GAME */
@@ -16,12 +16,20 @@ window.addEventListener("DOMContentLoaded", function () {
     // First, create the scene
     createScene();
 
-    // Second, assign input to player
+    // Player Controller
     controlPlayer();
 
     // GAME LOOP
     engine.runRenderLoop(function () {
+        // Lerp with inputs
+        player.position = BABYLON.Vector3.Lerp(player.position, player.movementMatrix[player.X][player.Z], scene.getRenderDuration() * 0.5);
+
         scene.render();
+    });
+
+    // the canvas/window resize event handler
+    window.addEventListener('resize', function () {
+        engine.resize();
     });
 });
 
@@ -41,8 +49,3 @@ function toggleFullScreen() {
         }
     }
 }
-
-// the canvas/window resize event handler
-window.addEventListener('resize', function () {
-    engine.resize();
-});
