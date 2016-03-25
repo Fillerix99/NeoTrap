@@ -24,6 +24,10 @@ window.addEventListener("DOMContentLoaded", function () {
         // Lerp with inputs
         player.position = BABYLON.Vector3.Lerp(player.position, player.movementMatrix[player.X][player.Z], scene.getRenderDuration() * 0.5);
 
+        // move the camera forward
+        cam.position.z += 0.25;
+
+        // render the scene
         scene.render();
     });
 

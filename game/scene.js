@@ -13,7 +13,7 @@ function createScene() {
 
     scene.ambientColor = scene.clearColor;
 
-    // main camera
+    // create the camera
     cam = new BABYLON.FreeCamera("Free Camera", new BABYLON.Vector3(0, 5, -75), scene);
 
     createLevel();
@@ -31,7 +31,7 @@ function createLevel() {
 
     // set positions and rotations
     floor1.position = new BABYLON.Vector3.Zero();
-    floor2.position = new BABYLON.Vector3(0, 0, 155);
+    floor2.position = new BABYLON.Vector3(0, 0, 150);
 
     // create new emissive material
     var mat = new BABYLON.StandardMaterial("Main Emissive", scene);
@@ -40,6 +40,45 @@ function createLevel() {
     // apply the material
     floor1.material = mat;
     floor2.material = mat;
+
+    // create collision walls
+    var collisionWall1 = new BABYLON.Mesh.CreatePlane("Wall1", 1, scene);
+    var collisionWall2 = new BABYLON.Mesh.CreatePlane("Wall2", 1, scene);
+
+    // scale the collison walls
+    collisionWall1.scaling = new BABYLON.Vector3(15, 10, 0.1);
+    collisionWall2.scaling = new BABYLON.Vector3(15, 10, 0.1);
+
+    // assign the parents
+    collisionWall1.parent = floor1;
+    collisionWall2.parent = floor2;
+
+    // assign the positions
+    collisionWall1.position.z += 100;
+    collisionWall2.position.z += 100;
+
+    // did they collide?
+    collisionWall1.collided = false;
+    collisionWall2.collided = false;
+
+    // create special material for collision walls and apply it
+    var collisionMat = new BABYLON.StandardMaterial("Collision Material", scene);
+    collisionMat.alpha = 0;
+    collisionWall1.material = collisionMat;
+    collisionWall2.material = collisionMat;
+
+    // detect the collisions
+    scene.registerAfterRender(function () {
+        if (collisionWall1.collided === false && player.intersectsMesh(collisionWall1, false)) {
+            collisionWall1.collided = true;
+            collisionWall2.collided = false;
+            collisionWall1.parent.position.z += 300;
+        } else if (collisionWall2.collided === false && player.intersectsMesh(collisionWall2, false)) {
+            collisionWall1.collided = false;
+            collisionWall2.collided = true;
+            collisionWall2.parent.position.z += 300;
+        }
+    });
 }
 
 function createPlayer() {
