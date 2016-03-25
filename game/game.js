@@ -31,6 +31,10 @@ window.addEventListener("DOMContentLoaded", function () {
     window.addEventListener('resize', function () {
         engine.resize();
     });
+
+    // FOR DEVELOPMENT ONLY
+    debugLayer = new BABYLON.DebugLayer(scene);
+    debugLayer.show();
 });
 
 /* SYSTEM FUNCTIONS */

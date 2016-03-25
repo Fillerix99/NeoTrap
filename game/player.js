@@ -21,7 +21,7 @@ function controlPlayer() {
     player.X = 1, player.Z = 1;
     player.position = player.movementMatrix[player.X][player.Z];
 
-    // Assign inputs
+    // keyboard input
     window.onkeydown = function (evt) {
         if ((evt.keyCode === 65 || evt.keyCode === 37) && player.X > 0) {
             // A
@@ -38,5 +38,32 @@ function controlPlayer() {
             // S
             player.Z++;
         }
+    }
+
+    // gamepad input
+    var gamepadConnected = function (gamepad) {
+        gamepad.onbuttondown(function (buttonIndex) {
+            if (buttonIndex === 3 && player.X > 0) {
+                // left pressed
+                player.X--;
+            } else if (buttonIndex === 1 && player.X < 2) {
+                // right pressed
+                player.X++;
+            }
+
+            if (buttonIndex === 5 && player.Z > 0) {
+                // up pressed
+                player.Z--;
+            } else if (buttonIndex === 2 && player.Z < 2) {
+                // down pressed
+                player.Z++;
+            }
+        });
+    };
+
+    var gamepads = new BABYLON.Gamepads(gamepadConnected);
+
+    if (navigator.getGamepads()[0]) {
+        gamepads._startMonitoringGamepads();
     }
 }
