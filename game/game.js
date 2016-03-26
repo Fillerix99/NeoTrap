@@ -3,42 +3,48 @@
 /* GAME CONTROLLER */
 
 /* GLOBAL VARS */
-var canvas, engine, scene, cam, debugLayer, player;
-
+var canvas, engine, scene, cam, debugLayer, player, fft;
 
 /* MAIN GAME */
 window.addEventListener("DOMContentLoaded", function () {
 
-    canvas = document.getElementById("renderCanvas");
-    engine = new BABYLON.Engine(canvas, true);
-    engine.enableOfflineSupport = true;
+    if (BABYLON.Engine.isSupported()) {
 
-    // First, create the scene
-    createScene();
+        canvas = document.getElementById("renderCanvas");
+        engine = new BABYLON.Engine(canvas, true);
+        engine.enableOfflineSupport = true;
 
-    // Player Controller
-    controlPlayer();
+        // First, create the scene
+        createScene();
 
-    // GAME LOOP
-    engine.runRenderLoop(function () {
-        // Lerp with inputs
-        player.position = BABYLON.Vector3.Lerp(player.position, player.movementMatrix[player.X][player.Z], scene.getRenderDuration() * 0.5);
+        // create the music analyser
+        analyseMusic();
 
-        // move the camera forward
-        cam.position.z += 0.25;
+        // Player Controller
+        controlPlayer();
 
-        // render the scene
-        scene.render();
-    });
+        // GAME LOOP
+        engine.runRenderLoop(function () {
+            // Lerp with inputs
+            player.position = BABYLON.Vector3.Lerp(player.position, player.movementMatrix[player.X][player.Z], scene.getRenderDuration() * 0.1);
 
-    // the canvas/window resize event handler
-    window.addEventListener('resize', function () {
-        engine.resize();
-    });
+            // move the camera forward
+            cam.speed = Lerp(cam.speed, 1.5, scene.getRenderDuration() * 0.0001);
+            cam.position.z += cam.speed;
 
-    // FOR DEVELOPMENT ONLY
-    debugLayer = new BABYLON.DebugLayer(scene);
-    debugLayer.show();
+            // render the scene
+            scene.render();
+        });
+
+        // the canvas/window resize event handler
+        window.addEventListener('resize', function () {
+            engine.resize();
+        });
+
+        // FOR DEVELOPMENT ONLY
+        debugLayer = new BABYLON.DebugLayer(scene);
+        debugLayer.show();
+    }
 });
 
 /* SYSTEM FUNCTIONS */
@@ -56,4 +62,8 @@ function toggleFullScreen() {
             document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
         }
     }
+}
+
+function Lerp(start, end, amount) {
+    return (start + (end - start) * amount);
 }
