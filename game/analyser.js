@@ -5,7 +5,7 @@
 var myAnalyser;
 
 function analyseMusic() {
-    var music = new BABYLON.Sound("Music", "../NeoTrap/music/Fire.mp3", scene, null, { autoplay: true, loop: true, streaming: true });
+    var music = new BABYLON.Sound("Music", "../NeoTrap/music/Team.mp3", scene, null, { autoplay: true, loop: true, streaming: true });
 
     myAnalyser = new BABYLON.Analyser(scene);
     BABYLON.Engine.audioEngine.connectToAnalyser(myAnalyser);
