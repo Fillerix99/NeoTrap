@@ -2,6 +2,8 @@
 
 /* PLAYER CONTROLLER */
 
+var player;
+
 function controlPlayer() {
 
     // matrix of gameplay move area

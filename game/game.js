@@ -3,7 +3,7 @@
 /* GAME CONTROLLER */
 
 /* GLOBAL VARS */
-var canvas, engine, scene, cam, debugLayer, player, fft;
+var canvas, engine, debugLayer, animRatio;
 
 /* MAIN GAME */
 window.addEventListener("DOMContentLoaded", function () {
@@ -25,11 +25,14 @@ window.addEventListener("DOMContentLoaded", function () {
 
         // GAME LOOP
         engine.runRenderLoop(function () {
+            // animation ratio
+            animRatio = scene.getAnimationRatio();
+
             // Lerp with inputs
-            player.position = BABYLON.Vector3.Lerp(player.position, player.movementMatrix[player.X][player.Z], scene.getRenderDuration() * 0.1);
+            player.position = BABYLON.Vector3.Lerp(player.position, player.movementMatrix[player.X][player.Z], animRatio / 5.0);
 
             // move the camera forward
-            cam.speed = Lerp(cam.speed, 1.5, scene.getRenderDuration() * 0.0001);
+            cam.speed = Lerp(cam.speed, 1, animRatio / 1000.0);
             cam.position.z += cam.speed;
 
             // render the scene

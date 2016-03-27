@@ -2,7 +2,7 @@
 
 /* SCENE CONTROLLER */
 
-/* src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/231224149&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe> */
+var scene, cam;
 
 function createScene() {
 
@@ -25,6 +25,8 @@ function createScene() {
     createPlayer();
 
     createSpectrum();
+
+    initParticles();
 }
 
 function createLevel() {
@@ -164,17 +166,86 @@ function createSpectrum() {
         posZ2 += 4;
     }
 
+
     scene.registerBeforeRender(function () {
+
         fft = myAnalyser.getByteFrequencyData();
 
         for (var i = 0; i < leftSpectrum1.length; i++) {
-            leftSpectrum1[i].scaling = new BABYLON.Vector3(fft[i] / 30.0 + 0.5, leftSpectrum1[i].scaling.y, leftSpectrum1[i].scaling.z);
-            rightSpectrum1[i].scaling = leftSpectrum1[i].scaling;
+            leftSpectrum1[i].scaling.x = Lerp(leftSpectrum1[i].scaling.x, fft[i] / 30.0 + 0.5, animRatio / 2.0);
+            rightSpectrum1[i].scaling.x = leftSpectrum1[i].scaling.x;
             
-            leftSpectrum2[leftSpectrum2.length - 1 - i].scaling = leftSpectrum1[i].scaling;
-            rightSpectrum2[rightSpectrum2.length - 1 - i].scaling = leftSpectrum1[i].scaling;
+            leftSpectrum2[leftSpectrum2.length - 1 - i].scaling.x = leftSpectrum1[i].scaling.x;
+            rightSpectrum2[rightSpectrum2.length - 1 - i].scaling.x = leftSpectrum1[i].scaling.x;
         }
-
-        cam.fov = fft[0] / 250.0;
+        
+        cam.fov = Lerp(cam.fov, fft[0] / 250.0, animRatio / 2.0);
     });
+}
+
+function initParticles() {
+    // create the particle system named "Dust System"
+    var particles = new BABYLON.ParticleSystem("Dust System", 2000, scene);
+
+    // create the emitter and its material
+    var emitterPlane = BABYLON.Mesh.CreatePlane("Particle Emitter", 1, scene);
+    var emitterPlaneMat = new BABYLON.StandardMaterial("Emitter Material", scene);
+    emitterPlaneMat.emissiveColor = new BABYLON.Color3(1, 1, 1);
+    emitterPlaneMat.alpha = 0;
+    emitterPlane.material = emitterPlaneMat;
+    
+    emitterPlane.parent = cam;
+    emitterPlane.position = new BABYLON.Vector3(0, 0, 100);
+    emitterPlane.scaling = new BABYLON.Vector3(15, 15, 1);
+    emitterPlane.rotation = new BABYLON.Vector3(0, 0, Math.PI / 2);
+
+    // set the texture
+    particles.particleTexture = new BABYLON.Texture("../NeoTrap/textures/dust.png", scene);
+
+    // source of emission
+    particles.emitter = emitterPlane;
+
+    // starting
+    particles.minEmitBox = new BABYLON.Vector3(1, 1, 1);
+
+    // ending
+    particles.maxEmitBox = new BABYLON.Vector3(-1, -1, -1);
+
+    // colors of the particles
+    particles.color1 = new BABYLON.Color4(255 / 255.0, 248 / 255.0, 225 / 255.0, 1.0);
+    particles.color2 = new BABYLON.Color4(255 / 255.0, 236 / 255.0, 179 / 255.0, 1.0);
+    particles.colorDead = new BABYLON.Color4(255 / 255.0, 224 / 255.0, 130 / 255.0, 0.0);
+
+    // size of particles
+    particles.minSize = 0.1;
+    particles.maxSize = 0.2;
+
+    // lifetime of particles
+    particles.minLifeTime = 2;
+    particles.maxLifeTime = 4;
+
+    // emission rate
+    particles.emitRate = 500;
+
+    // blend mode
+    particles.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+
+    // gravity for particles
+    particles.gravity = new BABYLON.Vector3(0, 0, -10);
+
+    // direction of the particles
+    particles.direction1 = new BABYLON.Vector3(0, 0, 1);
+    particles.direction2 = new BABYLON.Vector3(0, 0, 2);
+
+    // angular speed in radians
+    particles.minAngularSpeed = 0;
+    particles.maxAngularSpeed = Math.PI;
+
+    // speed
+    particles.minEmitPower = 1;
+    particles.maxEmitPower = 3;
+    particles.updateSpeed = 0.005;
+
+    // start the particle system
+    particles.start();
 }

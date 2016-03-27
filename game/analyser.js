@@ -2,10 +2,11 @@
 
 /* Music Analyser */
 
-var myAnalyser;
+var myAnalyser, fft;
 
 function analyseMusic() {
-    var music = new BABYLON.Sound("Music", "../NeoTrap/music/Team.mp3", scene, null, { autoplay: true, loop: true, streaming: true });
+    engine.displayLoadingUI();
+    var music = new BABYLON.Sound("Music", "../NeoTrap/music/Team.mp3", scene, function () { engine.hideLoadingUI(); }, { autoplay: true, loop: false, streaming: true });
 
     myAnalyser = new BABYLON.Analyser(scene);
     BABYLON.Engine.audioEngine.connectToAnalyser(myAnalyser);
