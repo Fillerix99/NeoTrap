@@ -166,19 +166,17 @@ function createSpectrum() {
         posZ2 += 4;
     }
 
-
     scene.registerBeforeRender(function () {
-
         fft = myAnalyser.getByteFrequencyData();
 
         for (var i = 0; i < leftSpectrum1.length; i++) {
-            leftSpectrum1[i].scaling.x = Lerp(leftSpectrum1[i].scaling.x, fft[i] / 30.0 + 0.5, animRatio / 2.0);
+            leftSpectrum1[i].scaling.x = Lerp(leftSpectrum1[i].scaling.x, fft[i + 25] / 50.0 + 0.5, animRatio / 2.0);
             rightSpectrum1[i].scaling.x = leftSpectrum1[i].scaling.x;
-            
-            leftSpectrum2[leftSpectrum2.length - 1 - i].scaling.x = leftSpectrum1[i].scaling.x;
-            rightSpectrum2[rightSpectrum2.length - 1 - i].scaling.x = leftSpectrum1[i].scaling.x;
+
+            leftSpectrum2[leftSpectrum2.length - i - 1].scaling.x = leftSpectrum1[i].scaling.x
+            rightSpectrum2[rightSpectrum2.length - i - 1].scaling.x = leftSpectrum1[i].scaling.x;
         }
-        
+
         cam.fov = Lerp(cam.fov, fft[0] / 250.0, animRatio / 2.0);
     });
 }
