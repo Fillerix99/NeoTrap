@@ -35,7 +35,7 @@ function createLevel() {
 
     // create tunnel meshes
     var floor1 = BABYLON.Mesh.CreateGround("Floor1", 15, 152, 1, scene);
-    var floor2 = BABYLON.Mesh.CreateGround("Floor2", 15, 152, 1, scene);
+    var floor2 = floor1.createInstance("Floor2");
 
     // set positions and rotations
     floor1.position = new BABYLON.Vector3.Zero();
@@ -51,7 +51,10 @@ function createLevel() {
 
     // create collision walls
     var collisionWall1 = new BABYLON.Mesh.CreatePlane("Wall1", 1, scene);
-    var collisionWall2 = new BABYLON.Mesh.CreatePlane("Wall2", 1, scene);
+    var collisionWall2 = collisionWall1.createInstance("Wall2");
+
+    collisionWall1.isVisible = false;
+    collisionWall2.isVisible = false;
 
     // scale the collison walls
     collisionWall1.scaling = new BABYLON.Vector3(15, 10, 0.1);
@@ -68,12 +71,6 @@ function createLevel() {
     // did they collide?
     collisionWall1.collided = false;
     collisionWall2.collided = false;
-
-    // create special material for collision walls and apply it
-    var collisionMat = new BABYLON.StandardMaterial("Collision Material", scene);
-    collisionMat.alpha = 0;
-    collisionWall1.material = collisionMat;
-    collisionWall2.material = collisionMat;
 
     // detect the collisions
     scene.registerAfterRender(function () {
@@ -112,85 +109,82 @@ function createSpectrum() {
 
     var posZ1 = -74, posZ2 = -74;
 
-    for (var i = 0; i < 38; i++) {
-        var specMesh1 = BABYLON.Mesh.CreateGround("SpecMesh1_" + i, 4, 4, 1, scene);
-        var specMat1 = new BABYLON.StandardMaterial("SpecMat1_" + i, scene);
+    var specMesh1;
 
-        var specMesh2 = BABYLON.Mesh.CreateGround("SpecMesh2_" + i, 4, 4, 1, scene);
-        var specMat2 = new BABYLON.StandardMaterial("SpecMat2_" + i, scene);
+    var specMat1 = new BABYLON.StandardMaterial("SpecMat1", scene);
+    var specMat2 = new BABYLON.StandardMaterial("SpecMat2", scene);
 
-        var specMesh3 = BABYLON.Mesh.CreateGround("SpecMesh3_" + i, 4, 4, 1, scene);
-        var specMat3 = new BABYLON.StandardMaterial("SpecMat3_" + i, scene);
+    for (var i = -1; i < 38; i++) {
+        if (i === -1) {
+            specMesh1 = BABYLON.Mesh.CreateGround("SpecMesh" + i, 4, 4, 1, scene);
 
-        var specMesh4 = BABYLON.Mesh.CreateGround("SpecMesh4_" + i, 4, 4, 1, scene);
-        var specMat4 = new BABYLON.StandardMaterial("SpecMat4_" + i, scene);
+            specMesh1.isVisible = false;
+        }
+        else {
+            specMat1.emissiveColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random());
+            specMat2.emissiveColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random());
+            specMesh1.material = specMat1;
 
-        specMat1.emissiveColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random());
-        specMat2.emissiveColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random());
-        specMat3.emissiveColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random());
-        specMat4.emissiveColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random());
+            // 1st spectrum left
+            leftSpectrum1[i] = specMesh1.createInstance("SpecMesh1_" + i);
+            leftSpectrum1[i].parent = floor1;
 
-        // 1st spectrum left
-        leftSpectrum1[i] = specMesh1;
-        leftSpectrum1[i].parent = floor1;
+            leftSpectrum1[i].position = new BABYLON.Vector3(-7, 1, posZ1);
+            leftSpectrum1[i].rotation = new BABYLON.Vector3(0, 0, -Math.PI / 2);
+            leftSpectrum1[i].material = specMat1;
 
-        leftSpectrum1[i].position = new BABYLON.Vector3(-7, 1, posZ1);
-        leftSpectrum1[i].rotation = new BABYLON.Vector3(0, 0, -Math.PI / 2);
-        leftSpectrum1[i].material = specMat1;
+            // 1st spectrum right
+            rightSpectrum1[i] = specMesh1.createInstance("SpecMesh2_" + i);
+            rightSpectrum1[i].parent = floor1;
 
-        // 1st spectrum right
-        rightSpectrum1[i] = specMesh2;
-        rightSpectrum1[i].parent = floor1;
+            rightSpectrum1[i].position = new BABYLON.Vector3(7, 1, posZ1);
+            rightSpectrum1[i].rotation = new BABYLON.Vector3(0, 0, Math.PI / 2);
+            rightSpectrum1[i].material = specMat1;
 
-        rightSpectrum1[i].position = new BABYLON.Vector3(7, 1, posZ1);
-        rightSpectrum1[i].rotation = new BABYLON.Vector3(0, 0, Math.PI / 2);
-        rightSpectrum1[i].material = specMat2;
+            // 2nd spectrum left
+            leftSpectrum2[i] = specMesh1.createInstance("SpecMesh3_" + i);
+            leftSpectrum2[i].parent = floor2;
 
-        // 2nd spectrum left
-        leftSpectrum2[i] = specMesh3;
-        leftSpectrum2[i].parent = floor2;
+            leftSpectrum2[i].position = new BABYLON.Vector3(-7, 1, posZ2);
+            leftSpectrum2[i].rotation = new BABYLON.Vector3(0, 0, -Math.PI / 2);
+            leftSpectrum2[i].material = specMat2;
 
-        leftSpectrum2[i].position = new BABYLON.Vector3(-7, 1, posZ2);
-        leftSpectrum2[i].rotation = new BABYLON.Vector3(0, 0, -Math.PI / 2);
-        leftSpectrum2[i].material = specMat3;
+            // 2nd spectrum right
+            rightSpectrum2[i] = specMesh1.createInstance("SpecMesh4_" + i);;
+            rightSpectrum2[i].parent = floor2;
 
-        // 2nd spectrum right
-        rightSpectrum2[i] = specMesh4;
-        rightSpectrum2[i].parent = floor2;
+            rightSpectrum2[i].position = new BABYLON.Vector3(7, 1, posZ2);
+            rightSpectrum2[i].rotation = new BABYLON.Vector3(0, 0, Math.PI / 2);
+            rightSpectrum2[i].material = specMat2;
 
-        rightSpectrum2[i].position = new BABYLON.Vector3(7, 1, posZ2);
-        rightSpectrum2[i].rotation = new BABYLON.Vector3(0, 0, Math.PI / 2);
-        rightSpectrum2[i].material = specMat4;
+            posZ1 += 4;
+            posZ2 += 4;
+        }
 
-        posZ1 += 4;
-        posZ2 += 4;
     }
 
     scene.registerBeforeRender(function () {
         fft = myAnalyser.getByteFrequencyData();
-
+        
         for (var i = 0; i < leftSpectrum1.length; i++) {
             leftSpectrum1[i].scaling.x = Lerp(leftSpectrum1[i].scaling.x, fft[i + 25] / 50.0 + 0.5, animRatio / 2.0);
             rightSpectrum1[i].scaling.x = leftSpectrum1[i].scaling.x;
 
             leftSpectrum2[leftSpectrum2.length - i - 1].scaling.x = leftSpectrum1[i].scaling.x
             rightSpectrum2[rightSpectrum2.length - i - 1].scaling.x = leftSpectrum1[i].scaling.x;
-        }
+        } 
 
         cam.fov = Lerp(cam.fov, fft[0] / 250.0, animRatio / 2.0);
     });
 }
 
 function initParticles() {
+    var emitter = scene.getMeshByName("Wall1");
+    var emitterPlane = emitter.createInstance("Emitter Plane");
+    emitterPlane.isVisible = false;
+
     // create the particle system named "Dust System"
     var particles = new BABYLON.ParticleSystem("Dust System", 2000, scene);
-
-    // create the emitter and its material
-    var emitterPlane = BABYLON.Mesh.CreatePlane("Particle Emitter", 1, scene);
-    var emitterPlaneMat = new BABYLON.StandardMaterial("Emitter Material", scene);
-    emitterPlaneMat.emissiveColor = new BABYLON.Color3(1, 1, 1);
-    emitterPlaneMat.alpha = 0;
-    emitterPlane.material = emitterPlaneMat;
     
     emitterPlane.parent = cam;
     emitterPlane.position = new BABYLON.Vector3(0, 0, 100);
