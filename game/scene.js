@@ -120,7 +120,7 @@ function createPlayer() {
     // attach cube to camera
     player.material = new BABYLON.StandardMaterial("Player Mat", scene);
     player.material.emissiveColor = new BABYLON.Color3(179 / 255.0, 229 / 255.0, 252 / 255.0);
-    player.material.alpha = 0.8;
+    player.material.alpha = 0.75;
 
     // position and scaling
     player.parent = cam;
