@@ -112,18 +112,16 @@ function createSpectrum() {
     var specMesh1;
 
     var specMat1 = new BABYLON.StandardMaterial("SpecMat1", scene);
-    var specMat2 = new BABYLON.StandardMaterial("SpecMat2", scene);
 
     for (var i = -1; i < 38; i++) {
         if (i === -1) {
             specMesh1 = BABYLON.Mesh.CreateGround("SpecMesh" + i, 4, 4, 1, scene);
+            
+            specMat1.emissiveColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random());
 
             specMesh1.isVisible = false;
         }
         else {
-            specMat1.emissiveColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random());
-            specMat2.emissiveColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random());
-            specMesh1.material = specMat1;
 
             // 1st spectrum left
             leftSpectrum1[i] = specMesh1.createInstance("SpecMesh1_" + i);
@@ -147,7 +145,7 @@ function createSpectrum() {
 
             leftSpectrum2[i].position = new BABYLON.Vector3(-7, 1, posZ2);
             leftSpectrum2[i].rotation = new BABYLON.Vector3(0, 0, -Math.PI / 2);
-            leftSpectrum2[i].material = specMat2;
+            leftSpectrum2[i].material = specMat1;
 
             // 2nd spectrum right
             rightSpectrum2[i] = specMesh1.createInstance("SpecMesh4_" + i);;
@@ -155,7 +153,7 @@ function createSpectrum() {
 
             rightSpectrum2[i].position = new BABYLON.Vector3(7, 1, posZ2);
             rightSpectrum2[i].rotation = new BABYLON.Vector3(0, 0, Math.PI / 2);
-            rightSpectrum2[i].material = specMat2;
+            rightSpectrum2[i].material = specMat1;
 
             posZ1 += 4;
             posZ2 += 4;
@@ -175,6 +173,8 @@ function createSpectrum() {
         } 
 
         cam.fov = Lerp(cam.fov, fft[0] / 250.0, animRatio / 2.0);
+
+        
     });
 }
 
@@ -184,7 +184,7 @@ function initParticles() {
     emitterPlane.isVisible = false;
 
     // create the particle system named "Dust System"
-    var particles = new BABYLON.ParticleSystem("Dust System", 2000, scene);
+    var particles = new BABYLON.ParticleSystem("Dust System", 1000, scene);
     
     emitterPlane.parent = cam;
     emitterPlane.position = new BABYLON.Vector3(0, 0, 100);
@@ -217,7 +217,7 @@ function initParticles() {
     particles.maxLifeTime = 4;
 
     // emission rate
-    particles.emitRate = 500;
+    particles.emitRate = 250;
 
     // blend mode
     particles.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
