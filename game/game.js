@@ -9,6 +9,7 @@ var canvas, engine, debugLayer, animRatio;
 window.addEventListener("DOMContentLoaded", function () {
 
     if (BABYLON.Engine.isSupported()) {
+        var fpsDiv = document.getElementById("fps");
 
         canvas = document.getElementById("renderCanvas");
         engine = new BABYLON.Engine(canvas, true);
@@ -37,6 +38,8 @@ window.addEventListener("DOMContentLoaded", function () {
 
             // render the scene
             scene.render();
+
+            fpsDiv.innerText = engine.getFps().toFixed(0);
         });
 
         // the canvas/window resize event handler

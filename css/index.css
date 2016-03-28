@@ -19,3 +19,9 @@ html, body{
     width: 100%;
     height: 100%;
 }
+
+#fps{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}

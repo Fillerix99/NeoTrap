@@ -2,7 +2,30 @@
 
 /* SCENE CONTROLLER */
 
-var scene, cam;
+var scene, cam, collisionWall1, collisionWall2;
+
+var newColorForSpectrum = null;
+var allColorsForSpectrum =
+    [
+        new BABYLON.Color3(229 / 255.0, 115 / 255.0, 115 / 255.0), // red
+        new BABYLON.Color3(240 / 255.0, 98 / 255.0, 146 / 255.0), // pink
+        new BABYLON.Color3(186 / 255.0, 104 / 255.0, 200 / 255.0), // purple
+        new BABYLON.Color3(149 / 255.0, 117 / 255.0, 205 / 255.0), // deep purple
+        new BABYLON.Color3(121 / 255.0, 134 / 255.0, 203 / 255.0), // indigo
+        new BABYLON.Color3(100 / 255.0, 181 / 255.0, 246 / 255.0), // blue
+        new BABYLON.Color3(79 / 255.0, 195 / 255.0, 247 / 255.0), // light blue
+        new BABYLON.Color3(77 / 255.0, 208 / 255.0, 225 / 255.0), // cyan
+        new BABYLON.Color3(77 / 255.0, 182 / 255.0, 172 / 255.0), // teal
+        new BABYLON.Color3(129 / 255.0, 199 / 255.0, 132 / 255.0), // green
+        new BABYLON.Color3(174 / 255.0, 213 / 255.0, 129 / 255.0), // light green
+        new BABYLON.Color3(220 / 255.0, 231 / 255.0, 117 / 255.0), // lime
+        new BABYLON.Color3(255 / 255.0, 241 / 255.0, 118 / 255.0), // yellow
+        new BABYLON.Color3(255 / 255.0, 213 / 255.0, 79 / 255.0), // amber
+        new BABYLON.Color3(255 / 255.0, 183 / 255.0, 77 / 255.0), // orange
+        new BABYLON.Color3(255 / 255.0, 138 / 255.0, 101 / 255.0) // deep orange
+    ];
+
+var counter = 0;
 
 function createScene() {
 
@@ -44,14 +67,15 @@ function createLevel() {
     // create new emissive material
     var mat = new BABYLON.StandardMaterial("Main Emissive", scene);
     mat.emissiveColor = new BABYLON.Color3(255 / 255.0, 205 / 255.0, 210 / 255.0);
+    mat.alpha = 0.5;
 
     // apply the material
     floor1.material = mat;
     floor2.material = mat;
 
     // create collision walls
-    var collisionWall1 = new BABYLON.Mesh.CreatePlane("Wall1", 1, scene);
-    var collisionWall2 = collisionWall1.createInstance("Wall2");
+    collisionWall1 = new BABYLON.Mesh.CreatePlane("Wall1", 1, scene);
+    collisionWall2 = collisionWall1.createInstance("Wall2");
 
     collisionWall1.isVisible = false;
     collisionWall2.isVisible = false;
@@ -82,6 +106,9 @@ function createLevel() {
             collisionWall1.collided = false;
             collisionWall2.collided = true;
             collisionWall2.parent.position.z += 304;
+
+            if (counter >= allColorsForSpectrum.length - 1) counter = 0;
+            counter++;
         }
     });
 }
@@ -93,6 +120,7 @@ function createPlayer() {
     // attach cube to camera
     player.material = new BABYLON.StandardMaterial("Player Mat", scene);
     player.material.emissiveColor = new BABYLON.Color3(179 / 255.0, 229 / 255.0, 252 / 255.0);
+    player.material.alpha = 0.8;
 
     // position and scaling
     player.parent = cam;
@@ -101,7 +129,7 @@ function createPlayer() {
 }
 
 function createSpectrum() {
-    
+
     var floor1 = scene.getMeshByName("Floor1");
     var floor2 = scene.getMeshByName("Floor2");
 
@@ -109,72 +137,70 @@ function createSpectrum() {
 
     var posZ1 = -74, posZ2 = -74;
 
-    var specMesh1;
+    var specMesh1 = BABYLON.Mesh.CreateGround("SpecMesh" + i, 4, 4, 1, scene);
+    specMesh1.isVisible = false;
 
-    var specMat1 = new BABYLON.StandardMaterial("SpecMat1", scene);
+    specMat1 = new BABYLON.StandardMaterial("SpecMat1", scene);
+    specMat1.emissiveColor = allColorsForSpectrum[0];
+    specMat1.alpha = 0.5;
 
-    for (var i = -1; i < 38; i++) {
-        if (i === -1) {
-            specMesh1 = BABYLON.Mesh.CreateGround("SpecMesh" + i, 4, 4, 1, scene);
-            
-            specMat1.emissiveColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random());
+    specMesh1.material = specMat1;
 
-            specMesh1.isVisible = false;
-        }
-        else {
+    for (var i = 0; i < 32; i++) {
+        
+        // 1st spectrum left
+        leftSpectrum1[i] = specMesh1.createInstance("SpecMesh1_" + i);
+        leftSpectrum1[i].parent = floor1;
 
-            // 1st spectrum left
-            leftSpectrum1[i] = specMesh1.createInstance("SpecMesh1_" + i);
-            leftSpectrum1[i].parent = floor1;
+        leftSpectrum1[i].position = new BABYLON.Vector3(-7.5, 0, posZ1);
+        leftSpectrum1[i].rotation = new BABYLON.Vector3(0, 0, -Math.PI / 2);
+        leftSpectrum1[i].material = specMat1;
 
-            leftSpectrum1[i].position = new BABYLON.Vector3(-7, 1, posZ1);
-            leftSpectrum1[i].rotation = new BABYLON.Vector3(0, 0, -Math.PI / 2);
-            leftSpectrum1[i].material = specMat1;
+        // 1st spectrum right
+        rightSpectrum1[i] = specMesh1.createInstance("SpecMesh2_" + i);
+        rightSpectrum1[i].parent = floor1;
 
-            // 1st spectrum right
-            rightSpectrum1[i] = specMesh1.createInstance("SpecMesh2_" + i);
-            rightSpectrum1[i].parent = floor1;
+        rightSpectrum1[i].position = new BABYLON.Vector3(7.5, 0, posZ1);
+        rightSpectrum1[i].rotation = new BABYLON.Vector3(0, 0, Math.PI / 2);
+        rightSpectrum1[i].material = specMat1;
 
-            rightSpectrum1[i].position = new BABYLON.Vector3(7, 1, posZ1);
-            rightSpectrum1[i].rotation = new BABYLON.Vector3(0, 0, Math.PI / 2);
-            rightSpectrum1[i].material = specMat1;
+        // 2nd spectrum left
+        leftSpectrum2[i] = specMesh1.createInstance("SpecMesh3_" + i);
+        leftSpectrum2[i].parent = floor2;
 
-            // 2nd spectrum left
-            leftSpectrum2[i] = specMesh1.createInstance("SpecMesh3_" + i);
-            leftSpectrum2[i].parent = floor2;
+        leftSpectrum2[i].position = new BABYLON.Vector3(-7.5, 0, posZ2);
+        leftSpectrum2[i].rotation = new BABYLON.Vector3(0, 0, -Math.PI / 2);
+        leftSpectrum2[i].material = specMat1;
 
-            leftSpectrum2[i].position = new BABYLON.Vector3(-7, 1, posZ2);
-            leftSpectrum2[i].rotation = new BABYLON.Vector3(0, 0, -Math.PI / 2);
-            leftSpectrum2[i].material = specMat1;
+        // 2nd spectrum right
+        rightSpectrum2[i] = specMesh1.createInstance("SpecMesh4_" + i);;
+        rightSpectrum2[i].parent = floor2;
 
-            // 2nd spectrum right
-            rightSpectrum2[i] = specMesh1.createInstance("SpecMesh4_" + i);;
-            rightSpectrum2[i].parent = floor2;
+        rightSpectrum2[i].position = new BABYLON.Vector3(7.5, 0, posZ2);
+        rightSpectrum2[i].rotation = new BABYLON.Vector3(0, 0, Math.PI / 2);
+        rightSpectrum2[i].material = specMat1;
 
-            rightSpectrum2[i].position = new BABYLON.Vector3(7, 1, posZ2);
-            rightSpectrum2[i].rotation = new BABYLON.Vector3(0, 0, Math.PI / 2);
-            rightSpectrum2[i].material = specMat1;
-
-            posZ1 += 4;
-            posZ2 += 4;
-        }
-
+        posZ1 += 4.75;
+        posZ2 += 4.75;
     }
 
     scene.registerBeforeRender(function () {
         fft = myAnalyser.getByteFrequencyData();
         
         for (var i = 0; i < leftSpectrum1.length; i++) {
-            leftSpectrum1[i].scaling.x = Lerp(leftSpectrum1[i].scaling.x, fft[i + 25] / 50.0 + 0.5, animRatio / 2.0);
+            leftSpectrum1[i].scaling.x = Lerp(leftSpectrum1[i].scaling.x, fft[i + 24] / 50.0 + 0.5, animRatio / 2.0);
             rightSpectrum1[i].scaling.x = leftSpectrum1[i].scaling.x;
 
             leftSpectrum2[leftSpectrum2.length - i - 1].scaling.x = leftSpectrum1[i].scaling.x
             rightSpectrum2[rightSpectrum2.length - i - 1].scaling.x = leftSpectrum1[i].scaling.x;
         } 
 
-        cam.fov = Lerp(cam.fov, fft[0] / 250.0, animRatio / 2.0);
+        cam.fov = Lerp(cam.fov, fft[0] / 250.0, animRatio / 3.0);
 
-        
+        if (collisionWall1.collided) {
+            newColorForSpectrum = allColorsForSpectrum[counter];
+            specMat1.emissiveColor = BABYLON.Color3.Lerp(specMat1.emissiveColor, newColorForSpectrum, animRatio / 50.0);
+        }
     });
 }
 
@@ -235,7 +261,7 @@ function initParticles() {
 
     // speed
     particles.minEmitPower = 1;
-    particles.maxEmitPower = 3;
+    particles.maxEmitPower = 2;
     particles.updateSpeed = 0.005;
 
     // start the particle system
