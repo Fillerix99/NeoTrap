@@ -48,8 +48,8 @@ window.addEventListener("DOMContentLoaded", function () {
         });
 
         // FOR DEVELOPMENT ONLY
-        //debugLayer = new BABYLON.DebugLayer(scene);
-        //debugLayer.show();
+        debugLayer = new BABYLON.DebugLayer(scene);
+        debugLayer.show();
     }
 });
 

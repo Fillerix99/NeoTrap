@@ -2,7 +2,7 @@
 
 /* SCENE CONTROLLER */
 
-var scene, cam, collisionWall1, collisionWall2;
+var scene, cam, collisionWall1, collisionWall2, particles;
 
 var newColorForSpectrum = null;
 var allColorsForSpectrum =
@@ -41,7 +41,6 @@ function createScene() {
     // create the camera
     cam = new BABYLON.FreeCamera("Free Camera", new BABYLON.Vector3(0, 5, -75), scene);
     cam.speed = 0.1;
-    //cam.attachControl(canvas, false);
 
     createLevel();
 
@@ -81,8 +80,8 @@ function createLevel() {
     collisionWall2.isVisible = false;
 
     // scale the collison walls
-    collisionWall1.scaling = new BABYLON.Vector3(15, 10, 0.1);
-    collisionWall2.scaling = new BABYLON.Vector3(15, 10, 0.1);
+    collisionWall1.scaling = new BABYLON.Vector3(15, 15, 0.1);
+    collisionWall2.scaling = new BABYLON.Vector3(15, 15, 0.1);
 
     // assign the parents
     collisionWall1.parent = floor1;
@@ -109,6 +108,9 @@ function createLevel() {
 
             if (counter >= allColorsForSpectrum.length - 1) counter = 0;
             counter++;
+
+            particles.color1 = allColorsForSpectrum[counter];
+            particles.color2 = allColorsForSpectrum[counter];
         }
     });
 }
@@ -120,7 +122,7 @@ function createPlayer() {
     // attach cube to camera
     player.material = new BABYLON.StandardMaterial("Player Mat", scene);
     player.material.emissiveColor = new BABYLON.Color3(179 / 255.0, 229 / 255.0, 252 / 255.0);
-    player.material.alpha = 0.75;
+    player.material.alpha = 0.7;
 
     // position and scaling
     player.parent = cam;
@@ -210,7 +212,7 @@ function initParticles() {
     emitterPlane.isVisible = false;
 
     // create the particle system named "Dust System"
-    var particles = new BABYLON.ParticleSystem("Dust System", 1000, scene);
+    particles = new BABYLON.ParticleSystem("Dust System", 1000, scene);
     
     emitterPlane.parent = cam;
     emitterPlane.position = new BABYLON.Vector3(0, 0, 100);
@@ -219,6 +221,7 @@ function initParticles() {
 
     // set the texture
     particles.particleTexture = new BABYLON.Texture("../NeoTrap/textures/dust.png", scene);
+    particles.particleTexture.hasAlpha = true;
 
     // source of emission
     particles.emitter = emitterPlane;
@@ -230,9 +233,9 @@ function initParticles() {
     particles.maxEmitBox = new BABYLON.Vector3(-1, -1, -1);
 
     // colors of the particles
-    particles.color1 = new BABYLON.Color4(255 / 255.0, 248 / 255.0, 225 / 255.0, 1.0);
-    particles.color2 = new BABYLON.Color4(255 / 255.0, 236 / 255.0, 179 / 255.0, 1.0);
-    particles.colorDead = new BABYLON.Color4(255 / 255.0, 224 / 255.0, 130 / 255.0, 0.0);
+    particles.color1 = allColorsForSpectrum[counter];
+    particles.color2 = allColorsForSpectrum[counter];
+    particles.colorDead = allColorsForSpectrum[counter];
 
     // size of particles
     particles.minSize = 0.1;
@@ -261,7 +264,7 @@ function initParticles() {
 
     // speed
     particles.minEmitPower = 1;
-    particles.maxEmitPower = 2;
+    particles.maxEmitPower = 3;
     particles.updateSpeed = 0.005;
 
     // start the particle system
