@@ -2,7 +2,7 @@
 
 /* SCENE CONTROLLER */
 
-var scene, cam, collisionWall1, collisionWall2, particles;
+var scene, cam, collisionWall1, collisionWall2, particles, cone, numOfCones = 1;
 
 var newColorForSpectrum = null;
 var allColorsForSpectrum =
@@ -50,7 +50,7 @@ function createScene() {
 
     initParticles();
 
-    createHazards();
+    createHazard();
 }
 
 function createLevel() {
@@ -201,9 +201,12 @@ function createSpectrum() {
 
         cam.fov = Lerp(cam.fov, fft[0] / 250.0, animRatio / 3.0);
 
+        if (fft[0] > 225) console.log("Create!");
+
         if (collisionWall1.collided) {
             newColorForSpectrum = allColorsForSpectrum[counter];
             specMat1.emissiveColor = BABYLON.Color3.Lerp(specMat1.emissiveColor, newColorForSpectrum, animRatio / 50.0);
+            cone.material.emissiveColor = BABYLON.Color3.Lerp(cone.material.emissiveColor, newColorForSpectrum, animRatio / 50.0);
         }
     });
 }
@@ -273,6 +276,16 @@ function initParticles() {
     particles.start();
 }
 
-function createHazards() {
+function createHazard() {
+    cone = BABYLON.MeshBuilder.CreateCylinder("cone", { diameterTop: 0, tessellation: 4 }, scene);
+    var coneMat = new BABYLON.StandardMaterial("Cone Material", scene);
+    coneMat.emissiveColor = allColorsForSpectrum[counter];
+
+    cone.material = coneMat;
+
+    cone.isVisible = false;
+}
+
+function spawnHazards() {
 
 }
