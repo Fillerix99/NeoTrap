@@ -242,8 +242,8 @@ function initParticles() {
     particles.maxSize = 0.2;
 
     // lifetime of particles
-    particles.minLifeTime = 2;
-    particles.maxLifeTime = 4;
+    particles.minLifeTime = 1;
+    particles.maxLifeTime = 1.5;
 
     // emission rate
     particles.emitRate = 250;
