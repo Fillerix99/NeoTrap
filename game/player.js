@@ -23,54 +23,43 @@ function controlPlayer() {
     player.X = 1, player.Z = 1;
     player.position = player.movementMatrix[player.X][player.Z];
 
+    // easing functions
+    var easingFunction = new BABYLON.SineEase();
+    easingFunction.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+
     // jump animation for the player
-    var jumpAnim = new BABYLON.Animation("Jump Animation", "position", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_RELATIVE);
-    jumpAnim.enableBlending = true;
-    jumpAnim.blendingSpeed = 0.01;
+    var jumpAnim = new BABYLON.Animation("Jump Animation", "position.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_RELATIVE);
     var jumpAnimKeys = [];
 
     jumpAnimKeys.push({
         frame: 0,
-        value: player.position
-    });
-
-    jumpAnimKeys.push({
+        value: player.position.y
+    }, {
         frame: 15,
-        value: player.position.add(new BABYLON.Vector3(0, 4, 0))
-    });
-
-    jumpAnimKeys.push({
+        value: player.position.y + 4
+    }, {
         frame: 30,
-        value: player.position
+        value: player.position.y
     });
-
-    var easingFunction = new BABYLON.SineEase();
-    easingFunction.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
-    jumpAnim.setEasingFunction(easingFunction);
 
     jumpAnim.setKeys(jumpAnimKeys);
+    jumpAnim.setEasingFunction(easingFunction);
     player.animations.push(jumpAnim);
 
-    // rotate animation for the player
-    var rotateAnim = new BABYLON.Animation("Rotate Animation", "rotation", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_RELATIVE);
-    var rotateKeys = [];
+    // rotate animation
+    var rotateAnim = new BABYLON.Animation("Rotate Animation", "rotation.x", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_RELATIVE);
+    var rotateAnimKeys = [];
 
-    rotateKeys.push({
+    rotateAnimKeys.push({
         frame: 0,
-        value: player.rotation
+        value: player.rotation.x
+    }, {
+        frame: 30,
+        value: player.position.x + Math.PI
     });
 
-    rotateKeys.push({
-        frame: 15,
-        value: player.rotation.add(new BABYLON.Vector3(Math.PI / 2.0, 0, 0))
-    });
-
-    rotateAnim.setKeys(rotateKeys);
-    rotateAnim.enableBlending = true;
-    rotateAnim.blendingSpeed = 0.01;
+    rotateAnim.setKeys(rotateAnimKeys);
     player.animations.push(rotateAnim);
-
-    var spacePressed = 0;
 
     // keyboard input
     window.onkeydown = function (evt) {
@@ -92,12 +81,7 @@ function controlPlayer() {
 
         if (evt.keyCode === 32) {
             // spacebar
-            spacePressed++;
-            jumpAnim.reset();
-            rotateAnim.reset();
-            jumpAnim.setKeys(jumpAnimKeys);
-            rotateAnim.setKeys(rotateKeys);
-            scene.beginAnimation(player, 0, 30, false);
+            scene.beginAnimation(player, 0, 60, false);
         }
     }
 

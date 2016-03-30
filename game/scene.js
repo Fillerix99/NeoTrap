@@ -49,6 +49,8 @@ function createScene() {
     createSpectrum();
 
     initParticles();
+
+    createHazards();
 }
 
 function createLevel() {
@@ -269,4 +271,8 @@ function initParticles() {
 
     // start the particle system
     particles.start();
+}
+
+function createHazards() {
+
 }
