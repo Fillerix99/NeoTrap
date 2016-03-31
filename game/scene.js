@@ -38,7 +38,7 @@ function createScene() {
 
     scene.ambientColor = scene.clearColor;
 
-    // create the camera
+    // create the normal camera
     cam = new BABYLON.FreeCamera("Free Camera", new BABYLON.Vector3(0, 5, -75), scene);
     cam.speed = 0.1;
 
@@ -54,9 +54,6 @@ function createScene() {
 }
 
 function createLevel() {
-    // create a new node called "environment"
-    var envNode = new BABYLON.Node("Environment", scene);
-
     // create tunnel meshes
     var floor1 = BABYLON.Mesh.CreateGround("Floor1", 15, 152, 1, scene);
     var floor2 = floor1.createInstance("Floor2");
@@ -144,7 +141,7 @@ function createSpectrum() {
     var specMesh1 = BABYLON.Mesh.CreateGround("SpecMesh" + i, 4, 4, 1, scene);
     specMesh1.isVisible = false;
 
-    specMat1 = new BABYLON.StandardMaterial("SpecMat1", scene);
+    var specMat1 = new BABYLON.StandardMaterial("SpecMat1", scene);
     specMat1.emissiveColor = allColorsForSpectrum[0];
     specMat1.alpha = 0.5;
 
@@ -195,7 +192,7 @@ function createSpectrum() {
             leftSpectrum1[i].scaling.x = Lerp(leftSpectrum1[i].scaling.x, fft[i + 24] / 50.0 + 0.5, animRatio / 2.0);
             rightSpectrum1[i].scaling.x = leftSpectrum1[i].scaling.x;
 
-            leftSpectrum2[leftSpectrum2.length - i - 1].scaling.x = leftSpectrum1[i].scaling.x
+            leftSpectrum2[leftSpectrum2.length - i - 1].scaling.x = leftSpectrum1[i].scaling.x;
             rightSpectrum2[rightSpectrum2.length - i - 1].scaling.x = leftSpectrum1[i].scaling.x;
         } 
 
@@ -286,6 +283,6 @@ function createHazard() {
     cone.isVisible = false;
 }
 
-function spawnHazards() {
+function spawnHazards(parent) {
 
 }

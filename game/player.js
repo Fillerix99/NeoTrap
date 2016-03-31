@@ -61,6 +61,8 @@ function controlPlayer() {
     rotateAnim.setKeys(rotateAnimKeys);
     player.animations.push(rotateAnim);
 
+    var initialTime = Date.now();
+
     // keyboard input
     window.onkeydown = function (evt) {
         if ((evt.keyCode === 65 || evt.keyCode === 37) && player.X > 0) {
@@ -81,9 +83,13 @@ function controlPlayer() {
 
         if (evt.keyCode === 32) {
             // spacebar
-            scene.beginAnimation(player, 0, 60, false);
+            var currenTime = Date.now();
+            if(currenTime - initialTime > 500){
+                scene.beginAnimation(player, 0, 60, false);
+                initialTime = Date.now();
+            }
         }
-    }
+    };
 
     // gamepad input
     var gamepadConnected = function (gamepad) {
