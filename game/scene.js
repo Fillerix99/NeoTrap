@@ -2,7 +2,8 @@
 
 /* SCENE CONTROLLER */
 
-var scene, cam, collisionWall1, collisionWall2, particles, cone, numOfCones = 1;
+var scene, cam, collisionWall1, collisionWall2, particles, cone;
+var hazardPozs = [], numOfHazards = 1;
 
 var newColorForSpectrum = null;
 var allColorsForSpectrum =
@@ -39,6 +40,7 @@ function createScene() {
     scene.ambientColor = scene.clearColor;
 
     // create the normal camera
+    //cam = new BABYLON.WebVRFreeCamera("Free Camera", new BABYLON.Vector3(0, 5, -75), scene, true);
     cam = new BABYLON.FreeCamera("Free Camera", new BABYLON.Vector3(0, 5, -75), scene);
     cam.speed = 0.1;
 
@@ -50,7 +52,7 @@ function createScene() {
 
     initParticles();
 
-    createHazard();
+    createHazards();
 }
 
 function createLevel() {
@@ -196,9 +198,7 @@ function createSpectrum() {
             rightSpectrum2[rightSpectrum2.length - i - 1].scaling.x = leftSpectrum1[i].scaling.x;
         } 
 
-        cam.fov = Lerp(cam.fov, fft[0] / 250.0, animRatio / 3.0);
-
-        if (fft[0] > 225) console.log("Create!");
+        cam.fov = Lerp(cam.fov, Math.abs(fft[0] / 100 - 0.8), animRatio / 3.0);
 
         if (collisionWall1.collided) {
             newColorForSpectrum = allColorsForSpectrum[counter];
@@ -240,8 +240,8 @@ function initParticles() {
     particles.colorDead = allColorsForSpectrum[counter];
 
     // size of particles
-    particles.minSize = 0.1;
-    particles.maxSize = 0.2;
+    particles.minSize = 0.2;
+    particles.maxSize = 0.3;
 
     // lifetime of particles
     particles.minLifeTime = 1;
@@ -273,16 +273,17 @@ function initParticles() {
     particles.start();
 }
 
-function createHazard() {
+function createHazards() {
     cone = BABYLON.MeshBuilder.CreateCylinder("cone", { diameterTop: 0, tessellation: 4 }, scene);
+
     var coneMat = new BABYLON.StandardMaterial("Cone Material", scene);
     coneMat.emissiveColor = allColorsForSpectrum[counter];
-
     cone.material = coneMat;
-
     cone.isVisible = false;
 }
 
 function spawnHazards(parent) {
-
+    for (var i = 0; i <= numOfHazards; i++) {
+        hazardPozs[i] = 0; // ? lol what
+    }
 }
