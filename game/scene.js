@@ -2,8 +2,9 @@
 
 /* SCENE CONTROLLER */
 
-var scene, cam, collisionWall1, collisionWall2, particles, cone;
-var hazardPozs = [], numOfHazards = 1;
+var scene, cam, collisionWall1, collisionWall2, particles;
+var floor1, floor2;
+var numOfHazards = 0, maxNumOfHazards = 20, cone;
 
 var newColorForSpectrum = null;
 var allColorsForSpectrum =
@@ -57,8 +58,8 @@ function createScene() {
 
 function createLevel() {
     // create tunnel meshes
-    var floor1 = BABYLON.Mesh.CreateGround("Floor1", 15, 152, 1, scene);
-    var floor2 = floor1.createInstance("Floor2");
+    floor1 = BABYLON.Mesh.CreateGround("Floor1", 15, 152, 1, scene);
+    floor2 = floor1.createInstance("Floor2");
 
     // set positions and rotations
     floor1.position = new BABYLON.Vector3.Zero();
@@ -102,6 +103,8 @@ function createLevel() {
             collisionWall1.collided = true;
             collisionWall2.collided = false;
             collisionWall1.parent.position.z += 304;
+
+            spawnHazards(floor1);
         } else if (collisionWall2.collided === false && player.intersectsMesh(collisionWall2, false)) {
             collisionWall1.collided = false;
             collisionWall2.collided = true;
@@ -112,6 +115,8 @@ function createLevel() {
 
             particles.color1 = allColorsForSpectrum[counter];
             particles.color2 = allColorsForSpectrum[counter];
+
+            spawnHazards(floor2);
         }
     });
 }
@@ -274,16 +279,56 @@ function initParticles() {
 }
 
 function createHazards() {
-    cone = BABYLON.MeshBuilder.CreateCylinder("cone", { diameterTop: 0, tessellation: 4 }, scene);
+    cone = BABYLON.MeshBuilder.CreateCylinder("cone", { diameterTop: 0, tessellation: 4, diameterBottom: 1.5, height: 3 }, scene);
 
     var coneMat = new BABYLON.StandardMaterial("Cone Material", scene);
     coneMat.emissiveColor = allColorsForSpectrum[counter];
     cone.material = coneMat;
     cone.isVisible = false;
+
+    floor1.hazardPozs = [], floor2.hazardPozs = [];
+
+    // initialize the positions array
+    var xPos = -4, zPos = -75;
+    for (var i = 0; i < 30; i++) {
+        floor1.hazardPozs[i] = new BABYLON.Vector3(xPos, 1.5, zPos);
+        floor2.hazardPozs[i] = new BABYLON.Vector3(xPos, 1.5, zPos);
+        if (xPos === 4) {
+            xPos = -4;
+        }
+        zPos += 5;
+        xPos += 4;
+    }
 }
 
 function spawnHazards(parent) {
-    for (var i = 0; i <= numOfHazards; i++) {
-        hazardPozs[i] = 0; // ? lol what
+    if (numOfHazards >= maxNumOfHazards) return; // stop at maximum
+
+    var randomIndex, randomPoz, newCone;
+
+    randomIndex = Math.floor((Math.random() * parent.hazardPozs.length));
+
+    randomPoz = parent.hazardPozs[randomIndex];
+
+    if (randomIndex > -1) {
+        parent.hazardPozs.splice(randomIndex, 1);
+
+        newCone = cone.createInstance("NewCone" + ++numOfHazards);
+        newCone.parent = parent;
+        newCone.position = randomPoz;
+    }
+}
+
+/**
+ * Shuffles array in place.
+ * @param {Array} a items The array containing the items.
+ */
+function shuffle(a) {
+    var j, x, i;
+    for (i = a.length; i; i -= 1) {
+        j = Math.floor(Math.random() * i);
+        x = a[i - 1];
+        a[i - 1] = a[j];
+        a[j] = x;
     }
 }
