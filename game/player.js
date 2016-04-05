@@ -127,4 +127,11 @@ function controlPlayer() {
     if (navigator.getGamepads()[0]) {
         gamepads._startMonitoringGamepads();
     }
+
+    // player collisions with hazardous cones
+    scene.registerBeforeRender(function () {
+
+        
+
+    });
 }

@@ -5,6 +5,8 @@
 /* GLOBAL VARS */
 var canvas, engine, debugLayer, animRatio;
 
+var isPlayerDead = false;
+
 /* MAIN GAME */
 window.addEventListener("DOMContentLoaded", function () {
 

@@ -6,6 +6,7 @@ var scene, cam, collisionWall1, collisionWall2, particles;
 var floor1, floor2;
 var numOfHazards = 0, maxNumOfHazards = 20, cone;
 
+
 var newColorForSpectrum = null;
 var allColorsForSpectrum =
     [
@@ -287,6 +288,7 @@ function createHazards() {
     cone.isVisible = false;
 
     floor1.hazardPozs = [], floor2.hazardPozs = [];
+    floor1.spawnedHazards = [], floor2.spawnedHazards = [];
 
     // initialize the positions array
     var xPos = -4, zPos = -75;
@@ -302,9 +304,18 @@ function createHazards() {
 }
 
 function spawnHazards(parent) {
-    if (numOfHazards >= maxNumOfHazards) return; // stop at maximum
+    var randomIndex, randomIndexForNewPos, randomPoz, newConeIndex;
 
-    var randomIndex, randomPoz, newCone;
+    if (numOfHazards >= maxNumOfHazards) {
+        randomIndexForNewPos = Math.floor((Math.random() * parent.hazardPozs.length));
+        newConeIndex = Math.floor((Math.random() * parent.spawnedHazards.length));
+
+        if (parent.spawnedHazards[newConeIndex] != null && parent.hazardPozs[randomIndexForNewPos] != null) {
+            parent.spawnedHazards[newConeIndex].position = parent.hazardPozs[randomIndexForNewPos];
+        }
+
+        return;
+    }
 
     randomIndex = Math.floor((Math.random() * parent.hazardPozs.length));
 
@@ -316,19 +327,7 @@ function spawnHazards(parent) {
         newCone = cone.createInstance("NewCone" + ++numOfHazards);
         newCone.parent = parent;
         newCone.position = randomPoz;
-    }
-}
 
-/**
- * Shuffles array in place.
- * @param {Array} a items The array containing the items.
- */
-function shuffle(a) {
-    var j, x, i;
-    for (i = a.length; i; i -= 1) {
-        j = Math.floor(Math.random() * i);
-        x = a[i - 1];
-        a[i - 1] = a[j];
-        a[j] = x;
+        parent.spawnedHazards.push(newCone);
     }
 }
