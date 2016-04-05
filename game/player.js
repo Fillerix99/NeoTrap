@@ -91,41 +91,47 @@ function controlPlayer() {
         }
     };
 
-    // gamepad input
-    var gamepadConnected = function (gamepad) {
-        gamepad.onbuttondown(function (buttonIndex) {
-            console.log(buttonIndex);
-            if (buttonIndex === 3 && player.X > 0) {
-                // left pressed
-                player.X--;
-            } else if (buttonIndex === 1 && player.X < 2) {
-                // right pressed
-                player.X++;
+    // browser detection
+    var ua = navigator.userAgent.toLowerCase();
+    if (ua.indexOf('safari') != -1) {
+        if (ua.indexOf('chrome') > -1) {
+            // gamepad input
+            var gamepadConnected = function (gamepad) {
+                gamepad.onbuttondown(function (buttonIndex) {
+                    console.log(buttonIndex);
+                    if (buttonIndex === 3 && player.X > 0) {
+                        // left pressed
+                        player.X--;
+                    } else if (buttonIndex === 1 && player.X < 2) {
+                        // right pressed
+                        player.X++;
+                    }
+
+                    if (buttonIndex === 5 && player.Z > 0) {
+                        // up pressed
+                        player.Z--;
+                    } else if (buttonIndex === 2 && player.Z < 2) {
+                        // down pressed
+                        player.Z++;
+                    }
+
+                    // jump!
+                    if (buttonIndex === 4) {
+                        var currentTime = Date.now();
+                        if (currentTime - initialTime > 500) {
+                            scene.beginAnimation(player, 0, 60, false);
+                            initialTime = Date.now();
+                        }
+                    }
+                });
+            };
+
+            var gamepads = new BABYLON.Gamepads(gamepadConnected);
+
+            if (navigator.getGamepads()[0]) {
+                gamepads._startMonitoringGamepads();
             }
-
-            if (buttonIndex === 5 && player.Z > 0) {
-                // up pressed
-                player.Z--;
-            } else if (buttonIndex === 2 && player.Z < 2) {
-                // down pressed
-                player.Z++;
-            }
-
-            // jump!
-            if (buttonIndex === 4) {
-                var currentTime = Date.now();
-                if (currentTime - initialTime > 500) {
-                    scene.beginAnimation(player, 0, 60, false);
-                    initialTime = Date.now();
-                }
-            }
-        });
-    };
-
-    var gamepads = new BABYLON.Gamepads(gamepadConnected);
-
-    if (navigator.getGamepads()[0]) {
-        gamepads._startMonitoringGamepads();
+        }
     }
 
     // player collisions with hazardous cones
