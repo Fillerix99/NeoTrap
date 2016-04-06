@@ -133,11 +133,4 @@ function controlPlayer() {
             }
         }
     }
-
-    // player collisions with hazardous cones
-    scene.registerBeforeRender(function () {
-
-        
-
-    });
 }

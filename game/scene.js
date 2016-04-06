@@ -5,7 +5,7 @@
 var scene, cam, collisionWall1, collisionWall2, particles;
 var floor1, floor2;
 var numOfHazards = 0, maxNumOfHazards = 20, cone;
-
+var colliders = []; // our colliders for the scene
 
 var newColorForSpectrum = null;
 var allColorsForSpectrum =
@@ -41,6 +41,9 @@ function createScene() {
 
     scene.ambientColor = scene.clearColor;
 
+    // enable collisions
+    scene.collisionsEnabled = true;
+
     // create the normal camera
     //cam = new BABYLON.WebVRFreeCamera("Free Camera", new BABYLON.Vector3(0, 5, -75), scene, true);
     cam = new BABYLON.FreeCamera("Free Camera", new BABYLON.Vector3(0, 5, -75), scene);
@@ -55,6 +58,8 @@ function createScene() {
     initParticles();
 
     createHazards();
+
+    checkForCollisions(player);
 }
 
 function createLevel() {
@@ -135,6 +140,9 @@ function createPlayer() {
     player.parent = cam;
     player.position = new BABYLON.Vector3(0, -4, 20);
     player.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
+
+    // death control
+    player.isDead = false;
 }
 
 function createSpectrum() {
@@ -146,7 +154,7 @@ function createSpectrum() {
 
     var posZ1 = -74, posZ2 = -74;
 
-    var specMesh1 = BABYLON.Mesh.CreateGround("SpecMesh" + i, 4, 4, 1, scene);
+    var specMesh1 = BABYLON.Mesh.CreateGround("SpecMesh", 4, 4, 1, scene);
     specMesh1.isVisible = false;
 
     var specMat1 = new BABYLON.StandardMaterial("SpecMat1", scene);
@@ -182,7 +190,7 @@ function createSpectrum() {
         leftSpectrum2[i].material = specMat1;
 
         // 2nd spectrum right
-        rightSpectrum2[i] = specMesh1.createInstance("SpecMesh4_" + i);;
+        rightSpectrum2[i] = specMesh1.createInstance("SpecMesh4_" + i);
         rightSpectrum2[i].parent = floor2;
 
         rightSpectrum2[i].position = new BABYLON.Vector3(7.5, 0, posZ2);
@@ -324,10 +332,26 @@ function spawnHazards(parent) {
     if (randomIndex > -1) {
         parent.hazardPozs.splice(randomIndex, 1);
 
-        newCone = cone.createInstance("NewCone" + ++numOfHazards);
+        var newCone = cone.createInstance("NewCone" + ++numOfHazards);
         newCone.parent = parent;
         newCone.position = randomPoz;
+        newCone.tagName = "hazard";
 
         parent.spawnedHazards.push(newCone);
+        colliders.push(newCone);
     }
+}
+
+function checkForCollisions(player){
+    scene.registerBeforeRender(function(){
+        for(var i = 0; i < colliders.length; i++){
+            if(player.intersectsMesh(colliders[i], false)){
+                // intersection with hazardous cones
+                if(colliders[i].tagName === "hazard"){
+                    player.isDead = true;
+                    console.log("Player died");
+                }
+            }
+        }
+    });
 }

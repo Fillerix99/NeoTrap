@@ -5,8 +5,6 @@
 /* GLOBAL VARS */
 var canvas, engine, debugLayer, animRatio;
 
-var isPlayerDead = false;
-
 /* MAIN GAME */
 window.addEventListener("DOMContentLoaded", function () {
 
@@ -33,6 +31,10 @@ window.addEventListener("DOMContentLoaded", function () {
 
             // Lerp with inputs
             player.position = BABYLON.Vector3.Lerp(player.position, player.movementMatrix[player.X][player.Z], animRatio / 5.0);
+
+            // decrease the "stamina" of player
+            player.material.alpha -= 0.0002;
+            console.log(player.material.alpha);
 
             // move the camera forward
             cam.speed = Lerp(cam.speed, 1, animRatio / 1000.0);

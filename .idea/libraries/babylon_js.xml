@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="babylon.js" type="javaScript">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/engine/hand.js" />
+      <root url="file://$PROJECT_DIR$/engine/babylon.js" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
