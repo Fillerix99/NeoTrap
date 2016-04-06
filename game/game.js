@@ -29,13 +29,6 @@ window.addEventListener("DOMContentLoaded", function () {
             // animation ratio
             animRatio = scene.getAnimationRatio();
 
-            // Lerp with inputs
-            player.position = BABYLON.Vector3.Lerp(player.position, player.movementMatrix[player.X][player.Z], animRatio / 5.0);
-
-            // decrease the "stamina" of player
-            player.material.alpha -= 0.0002;
-            console.log(player.material.alpha);
-
             // move the camera forward
             cam.speed = Lerp(cam.speed, 1, animRatio / 1000.0);
             cam.position.z += cam.speed;
@@ -56,6 +49,16 @@ window.addEventListener("DOMContentLoaded", function () {
         debugLayer.show();
     }
 });
+
+// shows the menu
+function showMenu(){
+
+}
+
+// restarts the game
+function restart(){
+
+}
 
 /* SYSTEM FUNCTIONS */
 

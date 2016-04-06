@@ -36,7 +36,7 @@ function controlPlayer() {
         value: player.position.y
     }, {
         frame: 15,
-        value: player.position.y + 4
+        value: player.position.y + 5
     }, {
         frame: 30,
         value: player.position.y
@@ -133,4 +133,18 @@ function controlPlayer() {
             }
         }
     }
+    
+    // movement
+    scene.registerBeforeRender(function(){
+        // Lerp with inputs
+        player.position = BABYLON.Vector3.Lerp(player.position, player.movementMatrix[player.X][player.Z], animRatio / 5.0);
+
+        // decrease the "health" of player and check if it died
+        player.material.alpha -= 0.0002;
+        if(player.material.alpha <= 0 || player.isDead){
+            // player died
+            music.stop();
+            player.visibility = false;
+        }
+    });
 }

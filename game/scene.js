@@ -2,7 +2,7 @@
 
 /* SCENE CONTROLLER */
 
-var scene, cam, collisionWall1, collisionWall2, particles;
+var scene, cam, collisionWall1, collisionWall2, particles, healer;
 var floor1, floor2;
 var numOfHazards = 0, maxNumOfHazards = 20, cone;
 var colliders = []; // our colliders for the scene
@@ -49,17 +49,19 @@ function createScene() {
     cam = new BABYLON.FreeCamera("Free Camera", new BABYLON.Vector3(0, 5, -75), scene);
     cam.speed = 0.1;
 
-    createLevel();
+    createLevel(); // creates our pre-designed level
 
-    createPlayer();
+    createPlayer(); // creates player
 
-    createSpectrum();
+    createSpectrum(); // creates our equalizing spectrum
 
-    initParticles();
+    initParticles(); // initialized and starts the particle system
 
-    createHazards();
+    createHazard(); // creates a hazard object and initializes it
 
-    checkForCollisions(player);
+    createHealer(floor1); // creates and initialized the first healer object
+
+    checkForCollisions(player); // checks collisions for the player
 }
 
 function createLevel() {
@@ -287,7 +289,7 @@ function initParticles() {
     particles.start();
 }
 
-function createHazards() {
+function createHazard() {
     cone = BABYLON.MeshBuilder.CreateCylinder("cone", { diameterTop: 0, tessellation: 4, diameterBottom: 1.5, height: 3 }, scene);
 
     var coneMat = new BABYLON.StandardMaterial("Cone Material", scene);
@@ -326,7 +328,6 @@ function spawnHazards(parent) {
     }
 
     randomIndex = Math.floor((Math.random() * parent.hazardPozs.length));
-
     randomPoz = parent.hazardPozs[randomIndex];
 
     if (randomIndex > -1) {
@@ -349,9 +350,36 @@ function checkForCollisions(player){
                 // intersection with hazardous cones
                 if(colliders[i].tagName === "hazard"){
                     player.isDead = true;
-                    console.log("Player died");
+                    console.log("Collided with hazard");
+                } else if(colliders[i].tagName === 'healer'){
+                    player.material.alpha += 0.25;
+                    if(player.material.alpha > 0.7) player.material.alpha = 0.7;
+                    respawnHealer(floor2);
+                    console.log("Collided with healer");
                 }
             }
         }
     });
 }
+
+function createHealer(parent){
+    healer = player.createInstance("Healer");
+    healer.parent = parent;
+    healer.position = new BABYLON.Vector3(0.0, 0.5, 0.0);
+    healer.tagName = "healer";
+
+    colliders.push(healer);
+}
+
+function respawnHealer(parent){
+    var randomIndex, randomPoz;
+
+    randomIndex = Math.floor((Math.random() * parent.hazardPozs.length));
+    randomPoz = parent.hazardPozs[randomIndex];
+
+    if (randomIndex > -1) {
+        healer.parent = parent;
+        healer.position = randomPoz;
+    }
+}
+
