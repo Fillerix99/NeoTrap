@@ -18,9 +18,11 @@
     <div id="credit">Created by Omar Huseynov</div>
     <div id="fps"></div>
     <div class="menu">
-        <a class="waves-effect waves-light btn-large" id="play">Play</a>
+        <a class="waves-effect waves-light btn-large" id="play" onclick="startPlaying();">Play</a>
+        <a class="waves-effect waves-light btn-large" id="fullscreen" onclick="toggleFullScreen();">Fullscreen</a>
         <a class="waves-effect waves-light btn-large" id="soundcloud">SoundCloud</a>
         <a class="waves-effect waves-light btn-large" id="google">Google</a>
+        <a class="waves-effect waves-light btn-large" id="github" onclick="openGithub();">Github</a>
     </div>
     <canvas id="renderCanvas" class="game"></canvas>
 </body>

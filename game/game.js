@@ -73,3 +73,17 @@ function toggleFullScreen() {
 function Lerp(start, end, amount) {
     return (start + (end - start) * amount);
 }
+
+function startPlaying(){
+    $('#title').css('visibility', 'hidden');
+    $('.menu').css('visibility', 'hidden');
+    $('#credit').css('visibility', 'hidden');
+
+    player.isDead = false;
+    player.isVisible = true;
+    music.play();
+}
+
+function openGithub(){
+    window.open("https://github.com/omarhuseynov011/NeoTrap", "_blank");
+}

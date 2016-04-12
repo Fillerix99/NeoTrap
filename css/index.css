@@ -40,10 +40,10 @@ html, body{
     height: 400px;
 }
 
-#play, #soundcloud, #google{
+#play, #soundcloud, #google, #github, #fullscreen{
     width: 100%;
 
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 #title{
@@ -53,13 +53,17 @@ html, body{
     font-size: 64pt;
     color: whitesmoke;
     text-align: center;
+
+    visibility: visible;
 }
 
 #credit{
     position: absolute;
-    margin: 90vh auto;
+    margin: 95vh auto;
     width: 100%;
-    font-size: 18pt;
+    font-size: 12pt;
     color: whitesmoke;
     text-align: center;
+
+    visibility: visible;
 }
