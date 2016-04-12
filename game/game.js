@@ -30,7 +30,10 @@ window.addEventListener("DOMContentLoaded", function () {
             animRatio = scene.getAnimationRatio();
 
             // move the camera forward
-            cam.speed = Lerp(cam.speed, 1, animRatio / 1000.0);
+            if(!player.isDead){
+                cam.speed = Lerp(cam.speed, 1, animRatio / 1000.0);
+            }
+
             cam.position.z += cam.speed;
 
             // render the scene
@@ -46,19 +49,9 @@ window.addEventListener("DOMContentLoaded", function () {
 
         // FOR DEVELOPMENT ONLY
         debugLayer = new BABYLON.DebugLayer(scene);
-        debugLayer.show();
+        //debugLayer.show();
     }
 });
-
-// shows the menu
-function showMenu(){
-
-}
-
-// restarts the game
-function restart(){
-
-}
 
 /* SYSTEM FUNCTIONS */
 

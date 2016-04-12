@@ -59,8 +59,6 @@ function createScene() {
 
     createHazard(); // creates a hazard object and initializes it
 
-    createHealer(floor1); // creates and initialized the first healer object
-
     checkForCollisions(player); // checks collisions for the player
 }
 
@@ -144,7 +142,8 @@ function createPlayer() {
     player.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
 
     // death control
-    player.isDead = false;
+    player.isDead = true;
+    player.isVisible = false;
 }
 
 function createSpectrum() {
@@ -346,40 +345,15 @@ function spawnHazards(parent) {
 function checkForCollisions(player){
     scene.registerBeforeRender(function(){
         for(var i = 0; i < colliders.length; i++){
-            if(player.intersectsMesh(colliders[i], false)){
+            if(player.intersectsMesh(colliders[i], true)){
                 // intersection with hazardous cones
                 if(colliders[i].tagName === "hazard"){
                     player.isDead = true;
+                    player.isVisible = false;
+                    music.stop();
                     console.log("Collided with hazard");
-                } else if(colliders[i].tagName === 'healer'){
-                    player.material.alpha += 0.25;
-                    if(player.material.alpha > 0.7) player.material.alpha = 0.7;
-                    respawnHealer(floor2);
-                    console.log("Collided with healer");
                 }
             }
         }
     });
 }
-
-function createHealer(parent){
-    healer = player.createInstance("Healer");
-    healer.parent = parent;
-    healer.position = new BABYLON.Vector3(0.0, 0.5, 0.0);
-    healer.tagName = "healer";
-
-    colliders.push(healer);
-}
-
-function respawnHealer(parent){
-    var randomIndex, randomPoz;
-
-    randomIndex = Math.floor((Math.random() * parent.hazardPozs.length));
-    randomPoz = parent.hazardPozs[randomIndex];
-
-    if (randomIndex > -1) {
-        healer.parent = parent;
-        healer.position = randomPoz;
-    }
-}
-

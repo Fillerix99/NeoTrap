@@ -5,6 +5,7 @@
 	<meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="css/reset.css"/>
     <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="materialize/css/materialize.min.css"/>
     <script src="engine/hand.js"></script>
     <script src="engine/babylon.js"></script>
     <script src="game/game.js"></script>
@@ -13,7 +14,16 @@
     <script src="game/analyser.js"></script>
 </head>
 <body oncontextmenu="return false;">
+    <div id="title">NeoTrap</div>
+    <div id="credit">Created by Omar Huseynov</div>
     <div id="fps"></div>
+    <div class="menu">
+        <a class="waves-effect waves-light btn-large" id="play">Play</a>
+        <a class="waves-effect waves-light btn-large" id="soundcloud">SoundCloud</a>
+        <a class="waves-effect waves-light btn-large" id="google">Google</a>
+    </div>
     <canvas id="renderCanvas" class="game"></canvas>
 </body>
+<script src="jquery-2.2.3.min.js"></script>
+<script src="materialize/js/materialize.min.js"></script>
 </html>
