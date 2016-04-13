@@ -358,7 +358,7 @@ function checkForCollisions(player){
                                 opacity: 0.7,
                                 width: '200px',
                                 height: '400px'
-                            }, 500);
+                            }, 400);
                         $('#totalScore').html('Score: ' + score);
                     }, 2500);
                 }
