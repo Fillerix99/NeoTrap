@@ -43,11 +43,7 @@ function createScene() {
 
     // enable collisions
     scene.collisionsEnabled = true;
-
-    // create the normal camera
-    //cam = new BABYLON.WebVRFreeCamera("Free Camera", new BABYLON.Vector3(0, 5, -75), scene, true);
-    cam = new BABYLON.FreeCamera("Free Camera", new BABYLON.Vector3(0, 5, -75), scene);
-    cam.speed = 0.1;
+    createCamera(); // creates camera
 
     createLevel(); // creates our pre-designed level
 
@@ -60,6 +56,11 @@ function createScene() {
     createHazard(); // creates a hazard object and initializes it
 
     checkForCollisions(player); // checks collisions for the player
+}
+
+function createCamera(){
+    cam = new BABYLON.FreeCamera("Free Camera", new BABYLON.Vector3(0, 5, -75), scene);
+    cam.speed = 0.1;
 }
 
 function createLevel() {
@@ -328,8 +329,6 @@ function spawnHazards(parent) {
         if (parent.spawnedHazards[newConeIndex] != null && parent.hazardPozs[randomIndexForNewPos] != null) {
             parent.spawnedHazards[newConeIndex].position = parent.hazardPozs[randomIndexForNewPos];
         }
-
-        return;
     }
 
     randomIndex = Math.floor((Math.random() * parent.hazardPozs.length));
@@ -356,15 +355,19 @@ function checkForCollisions(player){
                 if(colliders[i].tagName === "hazard"){
                     player.isDead = true;
                     player.isVisible = false;
+                    player.position = BABYLON.Vector3.Zero();
                     music.stop();
-                    $('#score').css('visibility', 'hidden');
+                    $('#score').css({
+                        'opacity': '0',
+                        'visibility': 'hidden'
+                    });
                     setTimeout(function(){
                         $('#leaderboardMenu').css('visibility', 'visible')
                             .animate({
                                 opacity: 0.7,
                                 width: '200px',
                                 height: '400px'
-                            }, 400);
+                            }, 500);
                         $('#totalScore').html('Score: ' + score);
                     }, 2500);
                 }

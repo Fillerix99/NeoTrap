@@ -3,7 +3,7 @@
 /* GAME CONTROLLER */
 
 /* GLOBAL VARS */
-var canvas, engine, debugLayer, animRatio;
+var canvas, engine, animRatio;
 
 var score = 10;
 
@@ -53,7 +53,7 @@ window.addEventListener("DOMContentLoaded", function () {
         });
 
         // FOR DEVELOPMENT ONLY
-        debugLayer = new BABYLON.DebugLayer(scene);
+        //debugLayer = new BABYLON.DebugLayer(scene);
         //debugLayer.show();
     }
 });
@@ -80,14 +80,37 @@ function Lerp(start, end, amount) {
 }
 
 function startPlaying(){
-    $('#title').css('visibility', 'hidden');
-    $('.menu').css('visibility', 'hidden');
-    $('#credit').css('visibility', 'hidden');
-    $('#score').css('visibility', 'visible');
 
-    player.isDead = false;
-    player.isVisible = true;
-    music.play();
+    $('#title').animate({
+        opacity: 0
+    }, 500, function(){
+        $('#title').css('visibility', 'hidden');
+    });
+
+    $('#credit').animate({
+        opacity: 0
+    }, 500, function(){
+        $('#credit').css('visibility', 'hidden');
+    });
+
+    $('.menu').animate({
+        opacity: 0
+    }, 500, function(){
+        $('#score').css({
+            'opacity': '0.7',
+            'visibility': 'visible'
+        });
+        $('.menu').css({
+            'visibility' : 'hidden'
+        });
+        player.isDead = false;
+        player.isVisible = true;
+        music.play();
+        score = 10;
+        cam.speed = 0.1;
+        clearAllInScene();
+        initHazardPozs();
+    });
 }
 
 function openGithub(){
@@ -115,17 +138,40 @@ function Retry() {
     music.play();
 
     $('#leaderboardMenu').animate({
-        opacity: 0,
-        width: 0,
-        height: 0
-    }, 400, function(){
+        opacity: 0
+    }, 500, function(){
+        $('#score').css({
+            'opacity': '0.7',
+            'visibility': 'visible'
+        });
         $('#leaderboardMenu').css('visibility', 'hidden');
-        $('#score').css('visibility', 'visible');
     });
 }
 
 function Menu(){
-    clearAllInScene();
+    $('#leaderboardMenu').animate({
+        opacity: 0
+    }, 500, function(){
+        $('#score').css('visibility', 'hidden');
+        $('#leaderboardMenu').css('visibility', 'hidden');
+        $('#mainMenu').css('visibility', 'visible')
+            .animate({
+                'opacity': '0.7'
+            }, 500);
+        cam.speed = 0.1;
+    });
+
+    $('#title').animate({
+        opacity: 0.7
+    }, 500, function(){
+        $('#title').css('visibility', 'visible');
+    });
+
+    $('#credit').animate({
+        opacity: 0.7
+    }, 500, function(){
+        $('#credit').css('visibility', 'visible');
+    });
 }
 
 function LeaderBoards(){
