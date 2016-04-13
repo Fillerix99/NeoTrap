@@ -99,7 +99,7 @@ function controlPlayer() {
                 gamepad.onbuttondown(function (buttonIndex) {
                     console.log(buttonIndex);
                     if (buttonIndex === 3 && player.X > 0) {
-                        // left pressed
+                        // left pressed 
                         player.X--;
                     } else if (buttonIndex === 1 && player.X < 2) {
                         // right pressed

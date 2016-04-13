@@ -33,14 +33,15 @@ html, body{
     right: 0;
     bottom: 0;
     margin: auto;
-    visibility: visible;
     opacity: 0.7;
 
     width: 200px;
     height: 400px;
+
+    text-align: center;
 }
 
-#play, #soundcloud, #google, #github, #fullscreen{
+#play, #soundcloud, #google, #github, #fullscreen, #Retry, #Menu, #Leaderboards{
     width: 100%;
 
     margin-top: 30px;
@@ -66,4 +67,33 @@ html, body{
     text-align: center;
 
     visibility: visible;
+}
+
+#score{
+    position: absolute;
+    margin: 30px auto;
+    width: 100%;
+    height: 50px;
+    font-size: 32pt;
+    color: whitesmoke;
+    text-align: center;
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    visibility: hidden;
+}
+
+#totalScore{
+    font-size: 18pt;
+}
+
+#leaderboardMenu{
+    visibility: hidden;
+    opacity: 0;
+
+    width: 0;
+    height: 0;
 }

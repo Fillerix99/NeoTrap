@@ -5,6 +5,8 @@
 /* GLOBAL VARS */
 var canvas, engine, debugLayer, animRatio;
 
+var score = 10;
+
 /* MAIN GAME */
 window.addEventListener("DOMContentLoaded", function () {
 
@@ -32,6 +34,7 @@ window.addEventListener("DOMContentLoaded", function () {
             // move the camera forward
             if(!player.isDead){
                 cam.speed = Lerp(cam.speed, 1, animRatio / 1000.0);
+                score += 10;
             }
 
             cam.position.z += cam.speed;
@@ -40,6 +43,8 @@ window.addEventListener("DOMContentLoaded", function () {
             scene.render();
 
             fpsDiv.innerText = engine.getFps().toFixed(0);
+
+            $('#score').html(score);
         });
 
         // the canvas/window resize event handler
@@ -78,6 +83,7 @@ function startPlaying(){
     $('#title').css('visibility', 'hidden');
     $('.menu').css('visibility', 'hidden');
     $('#credit').css('visibility', 'hidden');
+    $('#score').css('visibility', 'visible');
 
     player.isDead = false;
     player.isVisible = true;

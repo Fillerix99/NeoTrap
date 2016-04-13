@@ -351,7 +351,16 @@ function checkForCollisions(player){
                     player.isDead = true;
                     player.isVisible = false;
                     music.stop();
-                    console.log("Collided with hazard");
+                    $('#score').css('visibility', 'hidden');
+                    setTimeout(function(){
+                        $('#leaderboardMenu').css('visibility', 'visible')
+                            .animate({
+                                opacity: 0.7,
+                                width: '200px',
+                                height: '400px'
+                            }, 500);
+                        $('#totalScore').html('Score: ' + score);
+                    }, 2500);
                 }
             }
         }
