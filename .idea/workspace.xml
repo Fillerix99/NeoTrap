@@ -250,7 +250,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/jquery-2.2.3.min.js" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="JavaScript.Libraries" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="settings.editor.splitter.proportion" value="0.21645446" />
   </component>
   <component name="RecentsManager">
@@ -715,7 +715,7 @@
       <workItem from="1460532813889" duration="2322000" />
       <workItem from="1460539665199" duration="232000" />
       <workItem from="1460541004742" duration="1793000" />
-      <workItem from="1460552380415" duration="2355000" />
+      <workItem from="1460552380415" duration="2387000" />
     </task>
     <task id="LOCAL-00001" summary="Fully functional collision system">
       <created>1459964875378</created>
@@ -787,11 +787,18 @@
       <option name="project" value="LOCAL" />
       <updated>1460554636871</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Functioning Menu System #5">
+      <created>1460554751657</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1460554751657</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26549000" />
+    <option name="totallyTimeSpent" value="26581000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -852,7 +859,8 @@
     <MESSAGE value="Functioning Menu System #2" />
     <MESSAGE value="Functioning Menu System #3" />
     <MESSAGE value="Functioning Menu System #4" />
-    <option name="LAST_COMMIT_MESSAGE" value="Functioning Menu System #4" />
+    <MESSAGE value="Functioning Menu System #5" />
+    <option name="LAST_COMMIT_MESSAGE" value="Functioning Menu System #5" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
