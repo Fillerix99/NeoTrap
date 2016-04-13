@@ -33,7 +33,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
             // move the camera forward
             if(!player.isDead){
-                cam.speed = Lerp(cam.speed, 1, animRatio / 1000.0);
+                cam.speed = Lerp(cam.speed, 1.5, animRatio / 2000.0);
                 score += 10;
             }
 
@@ -98,15 +98,19 @@ function clearAllInScene(){
     for(var i = 0; i < colliders.length; i++){
         scene.removeMesh(colliders[i]);
     }
+
+    colliders = [];
 }
 
 function Retry() {
     clearAllInScene();
+    initHazardPozs();
 
     score = 10;
+    cam.speed = 0.1;
     player.isDead = false;
     player.isVisible = true;
-    player.position = player.movementMatrix[1][1]; // to the center
+    player.position = BABYLON.Vector3.Zero();
     music.stop();
     music.play();
 

@@ -288,16 +288,11 @@ function initParticles() {
     particles.start();
 }
 
-function createHazard() {
-    cone = BABYLON.MeshBuilder.CreateCylinder("cone", { diameterTop: 0, tessellation: 4, diameterBottom: 1.5, height: 3 }, scene);
-
-    var coneMat = new BABYLON.StandardMaterial("Cone Material", scene);
-    coneMat.emissiveColor = allColorsForSpectrum[counter];
-    cone.material = coneMat;
-    cone.isVisible = false;
-
-    floor1.hazardPozs = [], floor2.hazardPozs = [];
-    floor1.spawnedHazards = [], floor2.spawnedHazards = [];
+function initHazardPozs(){
+    floor1.hazardPozs = [];
+    floor2.hazardPozs = [];
+    floor1.spawnedHazards = [];
+    floor2.spawnedHazards = [];
 
     // initialize the positions array
     var xPos = -4, zPos = -75;
@@ -310,6 +305,17 @@ function createHazard() {
         zPos += 5;
         xPos += 4;
     }
+}
+
+function createHazard() {
+    cone = BABYLON.MeshBuilder.CreateCylinder("cone", { diameterTop: 0, tessellation: 4, diameterBottom: 1.5, height: 3 }, scene);
+
+    var coneMat = new BABYLON.StandardMaterial("Cone Material", scene);
+    coneMat.emissiveColor = allColorsForSpectrum[counter];
+    cone.material = coneMat;
+    cone.isVisible = false;
+
+    initHazardPozs();
 }
 
 function spawnHazards(parent) {
