@@ -2,7 +2,7 @@
 
 /* SCENE CONTROLLER */
 
-var scene, cam, collisionWall1, collisionWall2, particles, healer;
+var scene, cam, collisionWall1, collisionWall2, particles;
 var floor1, floor2;
 var numOfHazards = 0, maxNumOfHazards = 20, cone;
 var colliders = []; // our colliders for the scene
@@ -345,7 +345,7 @@ function spawnHazards(parent) {
 function checkForCollisions(player){
     scene.registerBeforeRender(function(){
         for(var i = 0; i < colliders.length; i++){
-            if(player.intersectsMesh(colliders[i], true)){
+            if(player.intersectsMesh(colliders[i], true) && !player.isDead){
                 // intersection with hazardous cones
                 if(colliders[i].tagName === "hazard"){
                     player.isDead = true;

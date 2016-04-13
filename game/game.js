@@ -93,3 +93,45 @@ function startPlaying(){
 function openGithub(){
     window.open("https://github.com/omarhuseynov011/NeoTrap", "_blank");
 }
+
+function clearAllInScene(){
+    for(var i = 0; i < colliders.length; i++){
+        scene.removeMesh(colliders[i]);
+    }
+}
+
+function Retry() {
+    clearAllInScene();
+
+    score = 10;
+    player.isDead = false;
+    player.isVisible = true;
+    player.position = player.movementMatrix[1][1]; // to the center
+    music.stop();
+    music.play();
+
+    $('#leaderboardMenu').animate({
+        opacity: 0,
+        width: 0,
+        height: 0
+    }, 400, function(){
+        $('#leaderboardMenu').css('visibility', 'hidden');
+        $('#score').css('visibility', 'visible');
+    });
+}
+
+function Menu(){
+    clearAllInScene();
+}
+
+function LeaderBoards(){
+
+}
+
+function connectSoundcloud(){
+
+}
+
+function connectGoogle(){
+
+}

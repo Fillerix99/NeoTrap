@@ -20,15 +20,15 @@
     <div id="score"></div>
     <div class="menu" id="leaderboardMenu">
         <span id="totalScore">Total Score <br/></span>
-        <a class="waves-effect waves-light btn-large" id="Retry">Retry</a>
-        <a class="waves-effect waves-light btn-large" id="Menu">Menu</a>
-        <a class="waves-effect waves-light btn-large" id="Leaderboards">Leaderboards</a>
+        <a class="waves-effect waves-light btn-large" id="Retry" onclick="Retry();">Retry</a>
+        <a class="waves-effect waves-light btn-large" id="Menu" onclick="Menu();">Menu</a>
+        <a class="waves-effect waves-light btn-large" id="Leaderboards" onclick="LeaderBoards();">Leaderboards</a>
     </div>
     <div class="menu">
         <a class="waves-effect waves-light btn-large" id="play" onclick="startPlaying();">Play</a>
         <a class="waves-effect waves-light btn-large" id="fullscreen" onclick="toggleFullScreen();">Fullscreen</a>
-        <a class="waves-effect waves-light btn-large" id="soundcloud">SoundCloud</a>
-        <a class="waves-effect waves-light btn-large" id="google">Google</a>
+        <a class="waves-effect waves-light btn-large" id="soundcloud" onclick="connectSoundcloud();">SoundCloud</a>
+        <a class="waves-effect waves-light btn-large" id="google" onclick="connectGoogle();">Google</a>
         <a class="waves-effect waves-light btn-large" id="github" onclick="openGithub();">Github</a>
     </div>
     <canvas id="renderCanvas" class="game"></canvas>
