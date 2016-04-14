@@ -4,7 +4,7 @@
 
 var scene, cam, collisionWall1, collisionWall2, particles;
 var floor1, floor2;
-var numOfHazards = 0, maxNumOfHazards = 20, cone;
+var numOfHazards = 0, maxNumOfHazards = 15, cone;
 var colliders = []; // our colliders for the scene
 
 var newColorForSpectrum = null;
@@ -233,7 +233,7 @@ function initParticles() {
     particles = new BABYLON.ParticleSystem("Dust System", 1000, scene);
     
     emitterPlane.parent = cam;
-    emitterPlane.position = new BABYLON.Vector3(0, 0, 100);
+    emitterPlane.position = new BABYLON.Vector3(0, 0, 100); // 100 is default
     emitterPlane.scaling = new BABYLON.Vector3(15, 15, 1);
     emitterPlane.rotation = new BABYLON.Vector3(0, 0, Math.PI / 2);
 

@@ -88,9 +88,6 @@ function Lerp(start, end, amount) {
 
 function startPlaying(){
 
-    player.X = 1;
-    player.Z = 1;
-
     $('#title').animate({
         opacity: 0
     }, 500, function(){
@@ -101,6 +98,12 @@ function startPlaying(){
         opacity: 0
     }, 500, function(){
         $('#credit').css('visibility', 'hidden');
+    });
+
+    $('#webglLogo').animate({
+        opacity: 0
+    }, 500, function(){
+        $('#webglLogo').css('visibility', 'hidden');
     });
 
     $('.menu').animate({
@@ -120,11 +123,10 @@ function startPlaying(){
         cam.speed = 0.1;
         clearAllInScene();
         initHazardPozs();
-    });
-}
 
-function openGithub(){
-    window.open("https://github.com/omarhuseynov011/NeoTrap", "_blank");
+        player.X = 1;
+        player.Z = 1;
+    });
 }
 
 function clearAllInScene(){
@@ -136,18 +138,6 @@ function clearAllInScene(){
 }
 
 function Retry() {
-    clearAllInScene();
-    initHazardPozs();
-
-    score = 10;
-    cam.speed = 0.1;
-    player.isDead = false;
-    player.isVisible = true;
-    player.X = 1;
-    player.Z = 1;
-    music.stop();
-    music.play();
-
     $('#leaderboardMenu').animate({
         opacity: 0
     }, 500, function(){
@@ -156,6 +146,18 @@ function Retry() {
             'visibility': 'visible'
         });
         $('#leaderboardMenu').css('visibility', 'hidden');
+
+        clearAllInScene();
+        initHazardPozs();
+
+        score = 10;
+        cam.speed = 0.1;
+        player.isDead = false;
+        player.isVisible = true;
+        player.X = 1;
+        player.Z = 1;
+        music.stop();
+        music.play();
     });
 }
 
@@ -173,15 +175,21 @@ function Menu(){
     });
 
     $('#title').animate({
-        opacity: 0.7
+        opacity: 1
     }, 500, function(){
         $('#title').css('visibility', 'visible');
     });
 
     $('#credit').animate({
-        opacity: 0.7
+        opacity: 1
     }, 500, function(){
         $('#credit').css('visibility', 'visible');
+    });
+
+    $('#webglLogo').animate({
+        opacity: 1
+    }, 500, function(){
+        $('#webglLogo').css('visibility', 'visible');
     });
 }
 

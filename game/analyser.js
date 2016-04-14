@@ -6,6 +6,9 @@
 // zephyr: 229895167
 // falling: 243977945
 // enigma: 241622846
+// fire: 231224149
+// king: 238538135
+// drop you like: 166660553
 
 var myAnalyser, fft, music;
 

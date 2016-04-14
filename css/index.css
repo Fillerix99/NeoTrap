@@ -23,7 +23,7 @@ html, body{
 #fps{
     position: absolute;
     top: 10px;
-    right: 10px;
+    left: 10px;
 }
 
 .menu{
@@ -58,11 +58,14 @@ html, body{
 
 #credit{
     position: absolute;
-    margin: 95vh auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
     width: 100%;
     font-size: 12pt;
     color: whitesmoke;
     text-align: center;
+    line-height: 2.0;
 }
 
 #score{
@@ -112,4 +115,20 @@ html, body{
 
 #helper{
     font-size: 12pt;
+}
+
+#soundcloudLogo{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+#webglLogo{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-bottom: 10px;
+    margin-left: 10px;
 }
