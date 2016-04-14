@@ -55,6 +55,13 @@ window.addEventListener("DOMContentLoaded", function () {
         // FOR DEVELOPMENT ONLY
         //debugLayer = new BABYLON.DebugLayer(scene);
         //debugLayer.show();
+    }else{
+        // WebGL is not supported
+        $('html').css('background-color', '#ef9a9a');
+        $('body').html("<div id='webglNoSupport'>" +
+            "WebGL is not supported on this browser<br/><span id='helper'>" +
+            "Please use a browser that supports WebGL and also make sure you have your latest graphics card driver installed" +
+            "<br/>For more info click <a href='http://webglreport.com/' target='_blank'>here</a></span></div>");
     }
 });
 
@@ -80,6 +87,9 @@ function Lerp(start, end, amount) {
 }
 
 function startPlaying(){
+
+    player.X = 1;
+    player.Z = 1;
 
     $('#title').animate({
         opacity: 0
@@ -133,7 +143,8 @@ function Retry() {
     cam.speed = 0.1;
     player.isDead = false;
     player.isVisible = true;
-    player.position = BABYLON.Vector3.Zero();
+    player.X = 1;
+    player.Z = 1;
     music.stop();
     music.play();
 
