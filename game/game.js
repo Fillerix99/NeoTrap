@@ -11,8 +11,6 @@ var score = 10;
 window.addEventListener("DOMContentLoaded", function () {
 
     if (BABYLON.Engine.isSupported()) {
-        showSplashScreen(); // show splash screen if game has been started for the first time
-
         var fpsDiv = document.getElementById("fps");
 
         canvas = document.getElementById("renderCanvas");
@@ -59,7 +57,6 @@ window.addEventListener("DOMContentLoaded", function () {
         //debugLayer.show();
     }else{
         // WebGL is not supported
-        $('html').css('background-color', '#ef9a9a');
         $('body').html("<div id='webglNoSupport'>" +
             "WebGL is not supported on this browser<br/><span id='helper'>" +
             "Please use a browser that supports WebGL and also make sure you have your latest graphics card driver installed" +
@@ -195,8 +192,26 @@ function Menu(){
     });
 }
 
-function showSplashScreen(){
-    $('html').css('background-color', '#ef9a9a');
+function enablePlay(){
+    if($('#riskButton').hasClass('disabled')) $('#riskButton').removeClass('disabled');
+    else $('#riskButton').addClass('disabled');
+}
+
+function continueToGame(){
+    $('.UI').animate({
+       opacity: 1
+    }, 2000, function(){
+        $('.UI').css('pointer-events', 'auto');
+    });
+    $('#splashScreen').animate({
+        opacity: 0
+    }, 2000, function(){
+        $('#splashScreen').css({
+            'visibility': 'hidden',
+            'pointer-events': 'none'
+        });
+        $('#leaderboardMenu').css('pointer-events', 'auto');
+    });
 }
 
 function LeaderBoards(){
