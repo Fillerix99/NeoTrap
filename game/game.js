@@ -198,6 +198,7 @@ function enablePlay(){
 }
 
 function continueToGame(){
+    if($('#riskButton').hasClass('disabled')) return;
     $('.UI').animate({
        opacity: 1
     }, 2000, function(){
@@ -207,8 +208,8 @@ function continueToGame(){
         opacity: 0
     }, 2000, function(){
         $('#splashScreen').css({
-            'visibility': 'hidden',
-            'pointer-events': 'none'
+            'pointer-events': 'none',
+            'visibility': 'hidden'
         });
         $('#leaderboardMenu').css('pointer-events', 'auto');
     });
