@@ -134,6 +134,7 @@ function clearAllInScene(){
     }
 
     colliders = [];
+    numOfHazards = 0;
 }
 
 function Retry() {
@@ -201,12 +202,12 @@ function continueToGame(){
     if($('#riskButton').hasClass('disabled')) return;
     $('.UI').animate({
        opacity: 1
-    }, 2000, function(){
+    }, 1000, function(){
         $('.UI').css('pointer-events', 'auto');
     });
     $('#splashScreen').animate({
         opacity: 0
-    }, 2000, function(){
+    }, 1000, function(){
         $('#splashScreen').css({
             'pointer-events': 'none',
             'visibility': 'hidden'

@@ -297,14 +297,14 @@ function initHazardPozs(){
 
     // initialize the positions array
     var xPos = -4, zPos = -75;
-    for (var i = 0; i < 30; i++) {
+    for (var i = 0; i < 15; i++) {
         floor1.hazardPozs[i] = new BABYLON.Vector3(xPos, 1.5, zPos);
         floor2.hazardPozs[i] = new BABYLON.Vector3(xPos, 1.5, zPos);
-        if (xPos === 4) {
+        xPos += 4;
+        zPos += 10;
+        if (xPos > 4) {
             xPos = -4;
         }
-        zPos += 5;
-        xPos += 4;
     }
 }
 
@@ -329,6 +329,8 @@ function spawnHazards(parent) {
         if (parent.spawnedHazards[newConeIndex] != null && parent.hazardPozs[randomIndexForNewPos] != null) {
             parent.spawnedHazards[newConeIndex].position = parent.hazardPozs[randomIndexForNewPos];
         }
+
+        return;
     }
 
     randomIndex = Math.floor((Math.random() * parent.hazardPozs.length));
