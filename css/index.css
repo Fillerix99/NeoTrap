@@ -173,3 +173,7 @@ form{
 .aligned{
     text-align: center;
 }
+
+#difficultyDiv, #musicDiv{
+    margin-top: 50px;
+}

@@ -45,8 +45,25 @@
     <div class="UI menu" id="mainMenu">
         <a class="waves-effect waves-light btn-large" id="play" onclick="startPlaying();">Play</a>
         <a class="waves-effect waves-light btn-large" id="fullscreen" onclick="toggleFullScreen();">Fullscreen</a>
-        <a class="waves-effect waves-light btn-large" id="soundcloud" onclick="connectSoundcloud();">SoundCloud</a>
-        <a class="waves-effect waves-light btn-large" id="google" onclick="connectGoogle();">Google</a>
+        <div class="input-field col s12" id="difficultyDiv">
+            <select id="difficulty">
+                <option value="1">Easy</option>
+                <option value="2" selected>Medium</option>
+                <option value="3">Hard (pause)</option>
+            </select>
+            <label for="difficulty">Choose difficulty</label>
+        </div>
+        <div class="input-field col s12" id="musicDiv">
+            <select id="music">
+                <option value="1" selected>Zephyr - Soul Trumpet feat. Patricia Edwards</option>
+                <option value="2">Falling - Opia</option>
+                <option value="3">Enigma - Jordan Comolli</option>
+                <option value="4">Fire - TheUnder</option>
+                <option value="5">I am the King - James Meyers</option>
+                <option value="6">Drop you like - Delax</option>
+            </select>
+            <label for="music">Choose track</label>
+        </div>
     </div>
     <canvas id="renderCanvas" class="UI game"></canvas>
     <a href="https://github.com/omarhuseynov011/NeoTrap" target="_blank">
@@ -55,4 +72,9 @@
 </body>
 <script src="js/jquery-2.2.3.min.js"></script>
 <script src="materialize/js/materialize.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('select').material_select();
+    });
+</script>
 </html>

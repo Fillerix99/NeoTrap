@@ -3,7 +3,7 @@
 /* GAME CONTROLLER */
 
 /* GLOBAL VARS */
-var canvas, engine, animRatio;
+var canvas, engine, animRatio, music, trackID;
 
 var score = 10;
 
@@ -86,6 +86,43 @@ function Lerp(start, end, amount) {
 }
 
 function startPlaying(){
+    // choose music
+    var musicIndex = $('#music').val();
+    switch (musicIndex){
+        case '1':
+            trackID = 229895167;
+            break;
+        case '2':
+            trackID = 243977945;
+            break;
+        case '3':
+            trackID = 241622846;
+            break;
+        case '4':
+            trackID = 231224149;
+            break;
+        case '5':
+            trackID = 238538135;
+            break;
+        case '6':
+            trackID = 166660553;
+    }
+    engine.displayLoadingUI();
+    if(music !== undefined)
+        music.dispose();
+    music = new BABYLON.Sound("Music", "http://api.soundcloud.com/tracks/" + trackID + "/stream?client_id=a0bc8bd86e876335802cfbb2a7b35dd2", scene, function () { engine.hideLoadingUI(); }, { autoplay: true, loop: false, streaming: true });
+    // choose difficulty
+    var difficultyIndex = $("#difficulty").val();
+    switch (difficultyIndex){
+        case '1':
+            maxNumOfHazards = 10;
+            break;
+        case '2':
+            maxNumOfHazards = 15;
+            break;
+        case '3':
+            maxNumOfHazards = 20;
+    }
 
     $('#title').animate({
         opacity: 0
@@ -117,7 +154,6 @@ function startPlaying(){
         });
         player.isDead = false;
         player.isVisible = true;
-        music.play();
         score = 10;
         cam.speed = 0.1;
         clearAllInScene();
@@ -138,6 +174,7 @@ function clearAllInScene(){
 }
 
 function Retry() {
+    music = new BABYLON.Sound("Music", "http://api.soundcloud.com/tracks/" + trackID + "/stream?client_id=a0bc8bd86e876335802cfbb2a7b35dd2", scene, function () { engine.hideLoadingUI(); }, { autoplay: true, loop: false, streaming: true });
     $('#leaderboardMenu').animate({
         opacity: 0
     }, 500, function(){
@@ -169,7 +206,7 @@ function Menu(){
         $('#leaderboardMenu').css('visibility', 'hidden');
         $('#mainMenu').css('visibility', 'visible')
             .animate({
-                'opacity': '0.7'
+                'opacity': '1'
             }, 500);
         cam.speed = 0.1;
     });

@@ -320,14 +320,17 @@ function createHazard() {
 }
 
 function spawnHazards(parent) {
-    var randomIndex, randomIndexForNewPos, randomPoz, newConeIndex;
+    var randomIndex, randomPoz;
+    shuffle(parent.hazardPozs);
 
     if (numOfHazards >= maxNumOfHazards) {
-        randomIndexForNewPos = Math.floor((Math.random() * parent.hazardPozs.length));
-        newConeIndex = Math.floor((Math.random() * parent.spawnedHazards.length));
-
-        if (parent.spawnedHazards[newConeIndex] != null && parent.hazardPozs[randomIndexForNewPos] != null) {
-            parent.spawnedHazards[newConeIndex].position = parent.hazardPozs[randomIndexForNewPos];
+        for(var i = 0; i < parent.spawnedHazards.length; i++){
+            var mesh = scene.getMeshByName(parent.name.charAt(5) + "NewCone" + i);
+            if(mesh !== null){
+                var newPoz = parent.hazardPozs[i];
+                mesh.position = newPoz;
+                colliders[i].position = newPoz;
+            }
         }
 
         return;
@@ -337,9 +340,14 @@ function spawnHazards(parent) {
     randomPoz = parent.hazardPozs[randomIndex];
 
     if (randomIndex > -1) {
+        var newCone;
         parent.hazardPozs.splice(randomIndex, 1);
 
-        var newCone = cone.createInstance("NewCone" + ++numOfHazards);
+        if(parent.name === "Floor1")
+            newCone = cone.createInstance("1NewCone" + numOfHazards);
+        else
+            newCone = cone.createInstance("2NewCone" + numOfHazards);
+        numOfHazards++;
         newCone.parent = parent;
         newCone.position = randomPoz;
         newCone.tagName = "hazard";
@@ -358,7 +366,8 @@ function checkForCollisions(player){
                     player.isDead = true;
                     player.isVisible = false;
                     player.position = BABYLON.Vector3.Zero();
-                    music.stop();
+                    if(music !== undefined)
+                        music.dispose();
                     $('#score').css({
                         'opacity': '0',
                         'visibility': 'hidden'
@@ -376,4 +385,27 @@ function checkForCollisions(player){
             }
         }
     });
+}
+
+/**
+ * Shuffles array in place.
+ * @param {Array} array items The array containing the items.
+ */
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
 }
