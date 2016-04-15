@@ -11,6 +11,8 @@ var score = 10;
 window.addEventListener("DOMContentLoaded", function () {
 
     if (BABYLON.Engine.isSupported()) {
+        showSplashScreen(); // show splash screen if game has been started for the first time
+
         var fpsDiv = document.getElementById("fps");
 
         canvas = document.getElementById("renderCanvas");
@@ -191,6 +193,10 @@ function Menu(){
     }, 500, function(){
         $('#webglLogo').css('visibility', 'visible');
     });
+}
+
+function showSplashScreen(){
+    $('html').css('background-color', '#ef9a9a');
 }
 
 function LeaderBoards(){

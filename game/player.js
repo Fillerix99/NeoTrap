@@ -97,7 +97,6 @@ function controlPlayer() {
             // gamepad input
             var gamepadConnected = function (gamepad) {
                 gamepad.onbuttondown(function (buttonIndex) {
-                    console.log(buttonIndex);
                     if (buttonIndex === 3 && player.X > 0) {
                         // left pressed 
                         player.X--;
@@ -122,6 +121,9 @@ function controlPlayer() {
                             initialTime = Date.now();
                         }
                     }
+
+                    if(player.isDead && buttonIndex === 9) Retry();
+                    else if(player.isDead && buttonIndex === 8) Menu();
                 });
             };
 

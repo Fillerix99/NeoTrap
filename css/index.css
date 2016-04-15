@@ -132,3 +132,28 @@ html, body{
     margin-bottom: 10px;
     margin-left: 10px;
 }
+
+#splashScreen{
+    position: absolute;
+    width: 800px;
+    height: 300px;
+
+    visibility: visible;
+    text-align: center;
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+    line-height: 2.0;
+}
+
+#warningMessage{
+    font-size: 32pt;
+}
+
+.UI{
+    visibility: hidden;
+}
