@@ -1,16 +1,8 @@
 ﻿/// <reference path="../game/ref.js" />
 
-// http://api.soundcloud.com/tracks/162671452/stream?client_id=a0bc8bd86e876335802cfbb2a7b35dd2
-
-/* Music Analyser */
-// zephyr: 229895167
-// falling: 243977945
-// enigma: 241622846
-// fire: 231224149
-// king: 238538135
-// drop you like: 166660553
-
 var myAnalyser, fft;
+
+//<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/183788956&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>
 
 function analyseMusic() {
     myAnalyser = new BABYLON.Analyser(scene);

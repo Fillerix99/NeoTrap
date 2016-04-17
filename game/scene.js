@@ -134,8 +134,8 @@ function createPlayer() {
 
     // attach cube to camera
     player.material = new BABYLON.StandardMaterial("Player Mat", scene);
-    player.material.emissiveColor = new BABYLON.Color3(179 / 255.0, 229 / 255.0, 252 / 255.0);
-    player.material.alpha = 0.7;
+    player.material.emissiveColor = playerColors[playerColorIndex];
+    player.material.alpha = 0.75;
 
     // position and scaling
     player.parent = cam;
@@ -365,7 +365,6 @@ function checkForCollisions(player){
                 if(colliders[i].tagName === "hazard"){
                     player.isDead = true;
                     player.isVisible = false;
-                    player.position = BABYLON.Vector3.Zero();
                     if(music !== undefined)
                         music.dispose();
                     $('#score').css({
@@ -380,7 +379,7 @@ function checkForCollisions(player){
                                 height: '400px'
                             }, 500);
                         $('#totalScore').html('Score: ' + score);
-                    }, 2500);
+                    }, 500);
                 }
             }
         }

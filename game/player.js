@@ -3,6 +3,12 @@
 /* PLAYER CONTROLLER */
 
 var player;
+var playerColors = [
+    new BABYLON.Color3(1, 0.5, 0.5),
+    new BABYLON.Color3(0.5, 1, 0.5),
+    new BABYLON.Color3(0.5, 0.5, 1)
+];
+var playerColorIndex = 0;
 
 function controlPlayer() {
     // matrix of gameplay move area
@@ -84,6 +90,9 @@ function controlPlayer() {
             // spacebar
             var currentTime = Date.now();
             if(currentTime - initialTime > 500){
+                playerColorIndex++;
+                if(playerColorIndex > playerColors.length - 1)
+                    playerColorIndex = 0;
                 scene.beginAnimation(player, 0, 60, false);
                 initialTime = Date.now();
             }
@@ -117,13 +126,17 @@ function controlPlayer() {
                     if (buttonIndex === 4) {
                         var currentTime = Date.now();
                         if (currentTime - initialTime > 500) {
+                            playerColorIndex++;
+                            if(playerColorIndex > playerColors.length - 1)
+                                playerColorIndex = 0;
                             scene.beginAnimation(player, 0, 60, false);
                             initialTime = Date.now();
                         }
                     }
-
+                    /*
                     if(player.isDead && buttonIndex === 9) Retry();
                     else if(player.isDead && buttonIndex === 8) Menu();
+                    */
                 });
             };
 
@@ -139,5 +152,6 @@ function controlPlayer() {
     scene.registerBeforeRender(function(){
         // Lerp with inputs
         player.position = BABYLON.Vector3.Lerp(player.position, player.movementMatrix[player.X][player.Z], animRatio / 5.0);
+        player.material.emissiveColor = BABYLON.Color3.Lerp(player.material.emissiveColor, playerColors[playerColorIndex], animRatio / 25.0);
     });
 }

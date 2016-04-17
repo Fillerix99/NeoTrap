@@ -106,6 +106,43 @@ function startPlaying(){
             break;
         case '6':
             trackID = 166660553;
+            break;
+        case '7':
+            trackID = 258471168;
+            break;
+        case '8':
+            trackID = 243121546;
+            break;
+        case '9':
+            trackID = 236984460;
+            break;
+        case '10':
+            trackID = 223841097;
+            break;
+        case '11':
+            trackID = 221321549;
+            break;
+        case '12':
+            trackID = 215564724;
+            break;
+        case '13':
+            trackID = 212505549;
+            break;
+        case '14':
+            trackID = 206393242;
+            break;
+        case '15':
+            trackID = 194863848;
+            break;
+        case '16':
+            trackID = 192636167;
+            break;
+        case '17':
+            trackID = 188143142;
+            break;
+        case '18':
+            trackID = 183788956;
+            break;
     }
     engine.displayLoadingUI();
     if(music !== undefined)
@@ -254,13 +291,5 @@ function continueToGame(){
 }
 
 function LeaderBoards(){
-
-}
-
-function connectSoundcloud(){
-
-}
-
-function connectGoogle(){
 
 }
