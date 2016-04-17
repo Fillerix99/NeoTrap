@@ -380,7 +380,7 @@ function checkForCollisions(player){
                                 height: '400px'
                             }, 500);
                         $('#totalScore').html('Score: ' + score);
-                    }, 2000);
+                    }, 1000);
                 }
             }
         }
