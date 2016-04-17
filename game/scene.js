@@ -363,6 +363,7 @@ function checkForCollisions(player){
             if(player.intersectsMesh(colliders[i], true) && !player.isDead){
                 // intersection with hazardous cones
                 if(colliders[i].tagName === "hazard"){
+                    $('html').css('cursor', 'default');
                     player.isDead = true;
                     player.isVisible = false;
                     if(music !== undefined)

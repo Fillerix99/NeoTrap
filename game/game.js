@@ -4,6 +4,7 @@
 
 /* GLOBAL VARS */
 var canvas, engine, animRatio, music, trackID;
+var howtoplayShown = false;
 
 var score = 10;
 
@@ -86,6 +87,22 @@ function Lerp(start, end, amount) {
 }
 
 function startPlaying(){
+
+    // disable cursor
+    $('html').css('cursor', 'none');
+
+    // show how to play
+    if(!howtoplayShown){
+        howtoplayShown = true;
+        $('#howtoplay').animate({
+            'opacity': '1.0'
+        }, 1000, function(){
+            $('#howtoplay').animate({
+               'opacity': '0'
+            }, 10000);
+        });
+    }
+
     // choose music
     var musicIndex = $('#music').val();
     switch (musicIndex){
@@ -211,6 +228,10 @@ function clearAllInScene(){
 }
 
 function Retry() {
+
+    // disable cursor
+    $('html').css('cursor', 'none');
+
     music = new BABYLON.Sound("Music", "http://api.soundcloud.com/tracks/" + trackID + "/stream?client_id=a0bc8bd86e876335802cfbb2a7b35dd2", scene, function () { engine.hideLoadingUI(); }, { autoplay: true, loop: false, streaming: true });
     $('#leaderboardMenu').animate({
         opacity: 0
