@@ -91,15 +91,6 @@ function startPlaying(){
     // disable cursor
     $('html').css('cursor', 'none');
 
-    // show how to play
-    if(!howtoplayShown){
-        howtoplayShown = true;
-        $('#howtoplay').css('opacity', '1.0')
-            .animate({
-                'opacity': '0'
-            }, 10000);
-    }
-
     // choose music
     var musicIndex = $('#music').val();
     switch (musicIndex){
@@ -161,7 +152,18 @@ function startPlaying(){
     engine.displayLoadingUI();
     if(music !== undefined)
         music.dispose();
-    music = new BABYLON.Sound("Music", "http://api.soundcloud.com/tracks/" + trackID + "/stream?client_id=a0bc8bd86e876335802cfbb2a7b35dd2", scene, function () { engine.hideLoadingUI(); }, { autoplay: true, loop: true, streaming: true });
+    music = new BABYLON.Sound("Music", "http://api.soundcloud.com/tracks/" + trackID + "/stream?client_id=a0bc8bd86e876335802cfbb2a7b35dd2", scene, function () {
+        engine.hideLoadingUI();
+
+        // show how to play
+        if(!howtoplayShown){
+            howtoplayShown = true;
+            $('#howtoplay').css('opacity', '1.0')
+                .animate({
+                    'opacity': '0'
+                }, 10000);
+        }
+    }, { autoplay: true, loop: true, streaming: true });
     // choose difficulty
     var difficultyIndex = $("#difficulty").val();
     switch (difficultyIndex){
