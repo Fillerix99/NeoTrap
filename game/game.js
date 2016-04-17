@@ -94,13 +94,10 @@ function startPlaying(){
     // show how to play
     if(!howtoplayShown){
         howtoplayShown = true;
-        $('#howtoplay').animate({
-            'opacity': '1.0'
-        }, 1000, function(){
-            $('#howtoplay').animate({
-               'opacity': '0'
+        $('#howtoplay').css('opacity', '1.0')
+            .animate({
+                'opacity': '0'
             }, 10000);
-        });
     }
 
     // choose music
