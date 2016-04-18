@@ -1,6 +1,17 @@
 # NeoTrap
-Game I'm developing using Babylon
+A Music based fast-paced action game
 
+You can play NeoTrap in the following websites:
+
+Github (Recommended): http://omarhuseynov011.github.io/NeoTrap
+
+Itch.io: https://omarhuseynov011.itch.io/neotrap
+
+Gamejolt: http://gamejolt.com/games/neotrap/141779
+
+Newgrounds: http://www.newgrounds.com/portal/view/673459
+
+NeoTrap is part of Ludum Dare Game Jam: http://ludumdare.com/compo/ludum-dare-35/?action=preview&uid=92927
 
 Copyright 2016 Omar Huseynov
 
