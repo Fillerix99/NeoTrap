@@ -3,7 +3,7 @@ A Music based fast-paced action game
 
 You can play NeoTrap in the following websites:
 
-Github: http://omarhuseynov011.github.io/NeoTrap
+Github (Recommended): http://omarhuseynov011.github.io/NeoTrap
 
 Itch.io: https://omarhuseynov011.itch.io/neotrap
 
