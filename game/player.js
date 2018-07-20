@@ -98,6 +98,17 @@ function controlPlayer() {
             }
         }
     };
+    // touch input
+    var hammertime = new Hammer(document.getElementById('touchDiv'), {});
+    hammertime.on('tap', function(tap) {
+        if ((tap.center.x < (screen.width / 2 )) && player.X > 0) {
+            // A
+            player.X--;
+        } else if ((tap.center.x > (screen.width / 2 )) && player.X < 2) {
+            // D
+            player.X++;
+        }
+    });
 
     // browser detection
     var ua = navigator.userAgent.toLowerCase();

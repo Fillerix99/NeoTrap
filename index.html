@@ -1,8 +1,9 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
-    <title>NeoTrap</title>
+    <title>NeonAvoider</title>
 	<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="css/reset.css"/>
     <link rel="stylesheet" type="text/css" href="css/index.css"/>
     <link rel="stylesheet" type="text/css" href="materialize/css/materialize.min.css"/>
@@ -16,9 +17,11 @@
     <script src="game/analyser.js"></script>
 </head>
 <body oncontextmenu="return false;">
+<div id="touchDiv">
     <div id="splashScreen">
         <form action="#">
-            <p id="warningMessage">Warning!</p>
+            <p id="warningMessage">Warning/Important Information!</p>
+            <p class="aligned">Denna sida innehåller icke-publika filer och designval som är skyddade av ett NDA mellan dig(klienten) och spelskaparen(Filip Nyquist). Genom att godkänna nedan så går du med på att inte berätta för någon om detta spel som inte är inbjuden / ej fått ta del av NDA.</p>
             <p class="aligned">Following game can cause seizures for people with <a style="color: whitesmoke;" href="https://en.wikipedia.org/wiki/Photosensitive_epilepsy" target="_blank">Photosensitive Epilepsy</a></p>
             <p class="aligned">In case of seizure, immediately close the browser tab in which game is running and conduct doctor as soon as possible</p>
             <p class="aligned">You can close your browser by pressing Alt + F4 (Windows and Linux), Command + Q (Mac)</p>
@@ -30,10 +33,8 @@
             <p><a class="waves-effect waves-light btn-large disabled" id="riskButton" onclick="continueToGame();">Continue to game</a></p>
         </form>
     </div>
-    <div id="title" class="UI">NeoTrap</div>
-    <div id="webglLogo" class="UI"><a href="https://www.khronos.org/webgl/" target="_blank"><img src="png/webglLogo.png" width="125" height="50"/></a></div>
-    <div id="credit" class="UI">Use headphones for the best experience<br/>Created by Omar Huseynov<br/>Made with<br/><a href="http://www.babylonjs.com/" target="_blank"><img src="png/babylonLogo.svg" height="50" width="100"></a></div>
-    <div id="soundcloudLogo" class="UI"><a href="https://soundcloud.com/" target="_blank"><img src="png/soundcloudLogo.png"/></a></div>
+    <div id="title" class="UI">NeonAvoider</div>
+    <div id="credit" class="UI">Use headphones for the best experience<br/>Created by Filip Nyquist<br/>Made with<br/><a href="http://www.babylonjs.com/" target="_blank"><img src="png/babylonLogo.svg" height="50" width="100"></a></div>
     <div id="fps" class="UI"></div>
     <div id="score"></div>
     <div id="howtoplay">
@@ -60,35 +61,20 @@
         </div>
         <div class="input-field col s12" id="musicDiv">
             <select id="music">
-                <option value="1" selected>Black Coast - TRNDSTTR (Lucian Remix) feat. M.Maggie</option>
-                <option value="2">Falling - Opia</option>
-                <option value="3">Enigma - Jordan Comolli</option>
-                <option value="4">Fire - TheUnder</option>
-                <option value="5">I am the King - James Meyers</option>
-                <option value="6">Drop you like - Delax</option>
-                <option value="7">Atlantic Haze - Osiris feat. Anuka</option>
-                <option value="8">Sex Whales & Fraxo - Dead to me feat. Lox Chatterbox</option>
-                <option value="9">Juanna - Intoxicated (Rothmann Remix)</option>
-                <option value="10">Tim Legend - Holy Water</option>
-                <option value="11">KRNE - Propane</option>
-                <option value="12">Sammie Beats - Sativa</option>
-                <option value="13">Sevnty - Bring it back</option>
-                <option value="14">Biometrix - Hush feat. Charli Brix</option>
-                <option value="15">Marshvll - The Vibe VIP. feat. Yung Fusion</option>
-                <option value="16">Wizard - Settle Down</option>
-                <option value="17">Hucci - Phoenix</option>
-                <option value="18">700K Subscriber Mix by Y2K</option>
-                <option value="19">Zephyr - Soul Trumpet feat. Patricia Edwards</option>
+                <option value="1" selected>Xillions - Heartbeat</option>
+                <option value="2">Xillions - Somebody Like Me</option>
+                <option value="3">Riton - Ginger</option>
+                <option value="4">Halsey - Hurricane (Arty Remix)</option>
+                <option value="5">GianLuca Vacchi Ft. Sebastian Yatra - LOVE</option>
             </select>
             <label for="music">Choose track</label>
         </div>
     </div>
     <canvas id="renderCanvas" class="UI game"></canvas>
-    <a href="https://github.com/omarhuseynov011/NeoTrap" target="_blank">
-        <img class="UI" style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png">
-    </a>
+</div>
 </body>
 <script src="js/jquery-2.2.3.min.js"></script>
+<script src="js/hammer.min.js"></script>
 <script src="materialize/js/materialize.min.js"></script>
 <script>
     $(document).ready(function() {

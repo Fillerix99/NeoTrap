@@ -17,7 +17,6 @@ window.addEventListener("DOMContentLoaded", function () {
         canvas = document.getElementById("renderCanvas");
         engine = new BABYLON.Engine(canvas, true);
         engine.enableOfflineSupport = true;
-
         // First, create the scene
         createScene();
 
@@ -95,68 +94,26 @@ function startPlaying(){
     var musicIndex = $('#music').val();
     switch (musicIndex){
         case '1':
-            trackID = 177683998;
+            trackID = 446843004;
             break;
         case '2':
-            trackID = 243977945;
+            trackID = 301799937;
             break;
         case '3':
-            trackID = 241622846;
+            trackID = 444291936;
             break;
         case '4':
-            trackID = 231224149;
+            trackID = 194035270;
             break;
         case '5':
-            trackID = 238538135;
-            break;
-        case '6':
-            trackID = 166660553;
-            break;
-        case '7':
-            trackID = 258471168;
-            break;
-        case '8':
-            trackID = 243121546;
-            break;
-        case '9':
-            trackID = 236984460;
-            break;
-        case '10':
-            trackID = 223841097;
-            break;
-        case '11':
-            trackID = 221321549;
-            break;
-        case '12':
-            trackID = 215564724;
-            break;
-        case '13':
-            trackID = 212505549;
-            break;
-        case '14':
-            trackID = 206393242;
-            break;
-        case '15':
-            trackID = 194863848;
-            break;
-        case '16':
-            trackID = 192636167;
-            break;
-        case '17':
-            trackID = 188143142;
-            break;
-        case '18':
-            trackID = 183788956;
-            break;
-        case '19':
-            trackID = 229895167;
+            trackID = 432085824;
             break;
     }
     engine.displayLoadingUI();
     if(music !== undefined)
         music.dispose();
     music = new BABYLON.Sound("Music", "http://api.soundcloud.com/tracks/" + trackID + "/stream?client_id=a0bc8bd86e876335802cfbb2a7b35dd2", scene, function () {
-        engine.hideLoadingUI();
+    engine.hideLoadingUI();
 
         // show how to play
         if(!howtoplayShown){

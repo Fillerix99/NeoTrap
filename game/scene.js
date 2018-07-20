@@ -238,7 +238,7 @@ function initParticles() {
     emitterPlane.rotation = new BABYLON.Vector3(0, 0, Math.PI / 2);
 
     // set the texture
-    particles.particleTexture = new BABYLON.Texture("../NeoTrap/textures/dust.png", scene);
+    particles.particleTexture = new BABYLON.Texture("../NeonAvoider/textures/dust.png", scene);
     particles.particleTexture.hasAlpha = true;
 
     // source of emission
